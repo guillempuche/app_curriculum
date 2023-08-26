@@ -60,6 +60,7 @@ class _ArtifactDetailsScreenState extends State<ArtifactDetailsScreen> {
             AppHeader(isTransparent: true),
           ]);
         },
+        future: null,
       ),
     );
   }
