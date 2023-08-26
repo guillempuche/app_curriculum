@@ -1,0 +1,9 @@
+name: deploy-web
+run-name: ${{ github.actor }} is deploying the Flutter web to Cloudflare
+on: [push]
+jobs:
+  deploy-web-to-cloudflare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Flutter web app to Cloudflare Pages
+        uses: senthilnasa/flutter-cloudflare-pages@v2
