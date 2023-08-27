@@ -3,8 +3,6 @@ import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../common_libs.dart';
 import '../logic/common/platform_info.dart';
 import '../ui/common/modals/fullscreen_video_viewer.dart';
@@ -34,8 +32,6 @@ class AppLogic {
   Future<void> bootstrap() async {
     debugPrint('bootstrap start...');
 
-    await dotenv.load(fileName: ".env");
-
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
@@ -55,8 +51,10 @@ class AppLogic {
     // Localizations
     await localeLogic.load();
 
-    // Experiences data
-    await experiencesLogic.init();
+    try {
+      // Experiences data
+      await experiencesLogic.init();
+    } on Exception catch (e) {}
 
     // Wonders data
     wondersLogic.init();

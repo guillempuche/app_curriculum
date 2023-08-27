@@ -1,6 +1,8 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'common_libs.dart';
 import 'logic/collectibles_logic.dart';
@@ -17,6 +19,9 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // Keep native splash screen up until app is finished bootstrapping
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await dotenv.load(fileName: ".env");
+  await Supabase.initialize(url: dotenv.env['API_SUPABASE']!, anonKey: dotenv.env['API_SUPABASE_KEY']!);
 
   // Start app
   registerSingletons();

@@ -31,6 +31,19 @@
 				"group": "Profiles"
 			}
 		},
+		///////// Web
+		{
+			"name": "Chrome",
+			"request": "launch",
+			"type": "dart",
+			"args": ["-d", "chrome"],
+			"program": "lib${pathSeparator}main.dart",
+			"flutterMode": "debug",
+			"console": "debugConsole",
+			"presentation": {
+				"group": "Web"
+			}
+		},
 		///////// Android devices
 		{
 			// Android default emulator

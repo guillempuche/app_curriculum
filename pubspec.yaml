@@ -52,6 +52,7 @@ dependencies:
   simple_rich_text: ^2.0.49
   sized_context: ^1.0.0+1
   smooth_page_indicator: ^1.0.1
+  supabase_flutter: ^1.10.14
   unsplash_client: ^2.1.1
   webview_flutter: ^4.2.2
   youtube_player_iframe: ^4.0.4
@@ -101,7 +102,7 @@ flutter:
     - assets/images/pyramids/
     - assets/images/taj_mahal/
     - assets/images/collectibles/
-    - assets/mock_data/
+    # - assets/mock_data/
     - .env
 
   fonts:
@@ -133,3 +134,6 @@ flutter:
     - family: B612Mono
       fonts:
         - asset: assets/fonts/B612Mono-Regular.ttf
+
+flutter_native_splash:
+  image: assets/marketing/app-icon-1024.png
