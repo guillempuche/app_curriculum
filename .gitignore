@@ -5,3 +5,4 @@
 !/build/web/**
 !/dist/
 !/dist/**
+/build/web/assets/.env
