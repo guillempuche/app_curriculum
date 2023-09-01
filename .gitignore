@@ -1,8 +1,8 @@
 *
 !.gitignore
+!.github/workflows/
 !/build/
 !/build/web/
 !/build/web/**
 !/dist/
 !/dist/**
-/build/web/assets/.env
