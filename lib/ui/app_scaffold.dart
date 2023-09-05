@@ -24,38 +24,11 @@ class AppScaffold extends StatelessWidget {
         // Provide a default texts style to allow Hero's to render text properly
         child: DefaultTextStyle(
           style: $styles.text.body,
-          // // Use a custom scroll behavior across entire app
-          // child: ScrollConfiguration(
-          //   behavior: AppScrollBehavior(),
-          child: GoRouterState.of(context).uri.toString() != ScreenPaths.intro
-              ? Stack(
-                  children: [
-                    child,
-                    Positioned(
-                        bottom: 50,
-                        left: 16,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextButton(
-                              child: Text('Intro'),
-                              onPressed: () => context.pushReplacement(ScreenPaths.intro),
-                            ),
-                            TextButton(
-                              child: Text('Experiences'),
-                              onPressed: () => context.push(ScreenPaths.experiences),
-                            ),
-                            TextButton(
-                              child: Text('Projects'),
-                              onPressed: () => context.push(ScreenPaths.projects),
-                            ),
-                          ],
-                        ))
-                  ],
-                )
-              : child,
-          // ),
+          // Use a custom scroll behavior across entire app
+          child: ScrollConfiguration(
+            behavior: AppScrollBehavior(),
+            child: child,
+          ),
         ),
       ),
     );
