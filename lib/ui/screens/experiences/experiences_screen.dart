@@ -305,7 +305,14 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                                 ),
                               ),
                               Gap($styles.insets.md),
-                              TextButton(onPressed: () => _showDetailsPage(context), child: Text('Read more')),
+                              TextButton(
+                                style: TextButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
+                                child: Text(
+                                  'Read more',
+                                  style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                                ),
+                                onPressed: () => _showDetailsPage(context),
+                              ),
                               Gap($styles.insets.md),
                               AppPageIndicator(
                                 count: _numExperiences,

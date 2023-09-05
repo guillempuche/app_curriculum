@@ -2,14 +2,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'common_libs.dart';
+import 'logic/projects_logic.dart';
 import 'logic/collectibles_logic.dart';
 import 'logic/experiences_logic.dart';
 import 'logic/locale_logic.dart';
-import 'logic/projects_api_logic.dart';
-import 'logic/projects_api_service.dart';
 import 'logic/timeline_logic.dart';
 import 'logic/unsplash_logic.dart';
 import 'logic/wallpaper_logic.dart';
@@ -21,12 +21,15 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await dotenv.load(fileName: ".env");
+
   await Supabase.initialize(url: dotenv.env['API_SUPABASE']!, anonKey: dotenv.env['API_SUPABASE_KEY']!);
 
-  // Start app
   registerSingletons();
-  runApp(App());
+
+  usePathUrlStrategy();
+
   await appLogic.bootstrap();
+  runApp(App());
 
   // Remove splash screen when bootstrap is complete
   FlutterNativeSplash.remove();
@@ -43,13 +46,16 @@ class App extends StatelessWidget with GetItMixin {
     return MaterialApp.router(
       routeInformationProvider: appRouter.routeInformationProvider,
       routeInformationParser: appRouter.routeInformationParser,
-      locale: locale == null ? null : Locale(locale),
-      debugShowCheckedModeBanner: false,
       routerDelegate: appRouter.routerDelegate,
+      title: 'Guillem Curriculum',
+      // onGenerateTitle: (context) {
+      //   return getScreenTitles[GoRouter.of(context)..toString()] ?? 'Guillem Curriculum';
+      // },
       theme: ThemeData(
         fontFamily: $styles.text.body.fontFamily,
         useMaterial3: true,
       ),
+      locale: locale == null ? null : Locale(locale),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -57,6 +63,7 @@ class App extends StatelessWidget with GetItMixin {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -67,13 +74,12 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<AppLogic>(() => AppLogic());
   // Experiences
   GetIt.I.registerLazySingleton<ExperiencesLogic>(() => ExperiencesLogic());
+  // Projects
+  GetIt.I.registerLazySingleton<ProjectsLogic>(() => ProjectsLogic());
   // Wonders
   GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
   // Timeline / Events
   GetIt.I.registerLazySingleton<TimelineLogic>(() => TimelineLogic());
-  // Search
-  GetIt.I.registerLazySingleton<ProjectsAPILogic>(() => ProjectsAPILogic());
-  GetIt.I.registerLazySingleton<ProjectsAPIService>(() => ProjectsAPIService());
   // Settings
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
@@ -88,11 +94,11 @@ void registerSingletons() {
 /// We deliberately do not create shortcuts for services, to discourage their use directly in the view/widget layer.
 AppLogic get appLogic => GetIt.I.get<AppLogic>();
 ExperiencesLogic get experiencesLogic => GetIt.I.get<ExperiencesLogic>();
+ProjectsLogic get projectsLogic => GetIt.I.get<ProjectsLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
 TimelineLogic get timelineLogic => GetIt.I.get<TimelineLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
-ProjectsAPILogic get projectsAPILogic => GetIt.I.get<ProjectsAPILogic>();
 CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
 WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();

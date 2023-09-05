@@ -62,18 +62,15 @@ class _AppImageState extends State<AppImage> {
       duration: widget.duration ?? $styles.times.fast,
       syncDuration: widget.syncDuration ?? 0.ms,
       loadingBuilder: (_, value, ___) {
-        if (!widget.distractor && !widget.progress) return SizedBox();
-        return Center(
-            child: AppLoadingIndicator(
-                value: widget.progress ? value : null, color: widget.color));
+        if (!widget.distractor && !widget.progress) return const SizedBox();
+        return Center(child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color));
       },
       errorBuilder: (_, __) => Container(
         padding: EdgeInsets.all($styles.insets.xs),
         alignment: Alignment.center,
         child: LayoutBuilder(builder: (_, constraints) {
-          double size =
-              min(constraints.biggest.width, constraints.biggest.height);
-          if (size < 16) return SizedBox();
+          double size = min(constraints.biggest.width, constraints.biggest.height);
+          if (size < 16) return const SizedBox();
           return Icon(
             Icons.image_not_supported_outlined,
             color: $styles.colors.white.withOpacity(0.1),

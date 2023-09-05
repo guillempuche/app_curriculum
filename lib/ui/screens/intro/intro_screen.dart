@@ -1,6 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../common_libs.dart';
+import '../../../logic/common/platform_info.dart';
 import '../../common/app_icons.dart';
 import '../../common/controls/app_page_indicator.dart';
 import '../../common/gradient_container.dart';
@@ -18,7 +19,7 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   static const double _imageSize = 250;
   // static const double _logoHeight = 126;
-  static const double _textHeight = 100;
+  static const double _textHeight = 120;
   static const double _pageIndicatorHeight = 55;
 
   static List<_PageData> pageData = [];
@@ -129,13 +130,6 @@ class _IntroScreenState extends State<IntroScreen> {
     super.dispose();
   }
 
-  void _handleIntroCompletePressed() {
-    if (_currentPage.value == pageData.length - 1) {
-      context.go(ScreenPaths.experiences);
-      // settingsLogic.hasCompletedOnboarding.value = true;
-    }
-  }
-
   void _handlePageChanged() {
     int newPage = _pageController.page?.round() ?? 0;
     _currentPage.value = newPage;
@@ -183,7 +177,12 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Semantics(
             onTapHint: $strings.introSemanticNavigate,
             onTap: _isOnLastPage ? null : _handleNavTextDoubleTapped,
-            child: Text($strings.introSemanticSwipeLeft, style: $styles.text.bodySmall),
+            child: Text(
+              PlatformInfo.isWeb && ScreenInfo.isMediumOrLarge(context)
+                  ? 'Scroll down to continue'
+                  : 'Swipe left to continue',
+              style: $styles.text.bodySmall,
+            ),
           ),
         );
       },
@@ -217,7 +216,7 @@ class _Page extends StatelessWidget {
           const Gap(_IntroScreenState._imageSize),
           SizedBox(
             height: _IntroScreenState._textHeight,
-            width: 400,
+            width: 500,
             child: StaticTextScale(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

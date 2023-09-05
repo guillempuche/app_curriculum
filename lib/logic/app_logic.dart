@@ -52,12 +52,13 @@ class AppLogic {
     await localeLogic.load();
 
     try {
-      // Experiences data
+      // Fetch data
       await experiencesLogic.init();
+      await projectsLogic.init();
     } on Exception catch (e) {}
 
-    // Wonders data
-    wondersLogic.init();
+    // // Wonders data
+    // wondersLogic.init();
 
     // Events
     timelineLogic.init();
@@ -67,14 +68,6 @@ class AppLogic {
 
     // Flag bootStrap as complete
     isBootstrapComplete = true;
-
-    // // Load initial view (replace empty initial view which is covered by a native splash screen)
-    // bool showIntro = settingsLogic.hasCompletedOnboarding.value == false;
-    // if (showIntro) {
-    appRouter.go(ScreenPaths.intro);
-    // } else {
-    // appRouter.go(ScreenPaths.experiences);
-    // }
   }
 
   Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {

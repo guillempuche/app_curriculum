@@ -1,7 +1,10 @@
 part of '../project_details_screen.dart';
 
 class _InfoColumn extends StatelessWidget {
-  const _InfoColumn({Key? key, required this.data}) : super(key: key);
+  const _InfoColumn({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
   final ProjectData data;
 
   @override
@@ -37,28 +40,38 @@ class _InfoColumn extends StatelessWidget {
                   return CompassDivider(isExpanded: !value, duration: $styles.times.med);
                 }),
             Gap($styles.insets.lg),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ...[
-                  _InfoRow($strings.projectDetailsLabelDate, '8/21/2023'),
-                  // _InfoRow($strings.projectDetailsLabelDate, data.date),
-                  // _InfoRow($strings.projectDetailsLabelPeriod, data.period),
-                  // _InfoRow($strings.projectDetailsLabelGeography, data.country),
-                  // _InfoRow($strings.projectDetailsLabelMedium, data.medium),
-                  // _InfoRow($strings.projectDetailsLabelDimension, data.dimension),
-                  // _InfoRow($strings.projectDetailsLabelClassification, data.classification),
-                ]
-                    .animate(interval: 100.ms)
-                    .fadeIn(delay: 600.ms, duration: $styles.times.med)
-                    .slide(begin: const Offset(0.2, 0), curve: Curves.easeOut),
-              ],
+            if (data.date != null)
+              Text(
+                StringUtils.formatYrMth(data.date!),
+                style: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+              ),
+            SizedBox(
+              height: 400,
+              child: MarkdownRenderer(
+                data.text,
+                style: MarkdownStyleSheet(
+                  p: $styles.text.body.copyWith(color: $styles.colors.offWhite),
+                ),
+              ),
             ),
-            Gap($styles.insets.md),
-            Text(
-              $strings.homeMenuAboutMet,
-              style: $styles.text.caption.copyWith(color: $styles.colors.accent2),
-            ).animate(delay: 1.5.seconds).fadeIn().slide(begin: const Offset(0.2, 0), curve: Curves.easeOut),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     ...[
+            //       _InfoRow($strings.projectDetailsLabelDate, '8/21/2023'),
+
+            //       // _InfoRow($strings.projectDetailsLabelDate, data.date),
+            //       // _InfoRow($strings.projectDetailsLabelPeriod, data.period),
+            //       // _InfoRow($strings.projectDetailsLabelGeography, data.country),
+            //       // _InfoRow($strings.projectDetailsLabelMedium, data.medium),
+            //       // _InfoRow($strings.projectDetailsLabelDimension, data.dimension),
+            //       // _InfoRow($strings.projectDetailsLabelClassification, data.classification),
+            //     ]
+            //         .animate(interval: 100.ms)
+            //         .fadeIn(delay: 600.ms, duration: $styles.times.med)
+            //         .slide(begin: const Offset(0.2, 0), curve: Curves.easeOut),
+            //   ],
+            // ),
             Gap($styles.insets.offset),
           ],
         ),

@@ -31,7 +31,7 @@ class _ImageBtn extends StatelessWidget {
                 tag: data.imageUrl,
                 child: AppImage(
                   image: NetworkImage(data.imageUrl),
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   distractor: true,
                   scale: FullscreenUrlImgViewer.imageScale, // so the image isn't reloaded
                 ),

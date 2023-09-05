@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:guillem_curriculum/logic/data/project_data.dart';
+import 'package:guillem_curriculum/logic/projects_logic.dart';
 
 import '../../../../common_libs.dart';
 import '../../../common/controls/app_page_indicator.dart';
@@ -27,8 +28,9 @@ class _ProjectsCarouselScreenState extends State<ProjectsCarouselScreen> {
   PageController? _pageController;
   final _currentPage = ValueNotifier<double>(9999);
 
+  List<ProjectData> get _projects => projectsLogic.all;
   // late final List<HighlightData> _artifacts = HighlightData.forWonder(widget.type);
-  late final List<ProjectData> _projects = ProjectData.all;
+
   late final _currentArtifactIndex = ValueNotifier<int>(_wrappedPageIndex);
 
   int get _wrappedPageIndex => _currentPage.value.round() % _projects.length;
@@ -78,9 +80,7 @@ class _ProjectsCarouselScreenState extends State<ProjectsCarouselScreen> {
 
     return VerticalSwipeNavigator(
       backDirection: TransitionDirection.bottomToTop,
-      forwardDirection: TransitionDirection.topToBottom,
       goBackPath: ScreenPaths.experiences,
-      goForwardPath: ScreenPaths.library,
       child: Stack(
         children: [
           /// Blurred Bg

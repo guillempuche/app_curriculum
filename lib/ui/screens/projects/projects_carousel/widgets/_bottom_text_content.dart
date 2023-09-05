@@ -1,14 +1,19 @@
 part of '../projects_carousel_screen.dart';
 
 class _BottomTextContent extends StatelessWidget {
-  const _BottomTextContent(
-      {Key? key, required this.project, required this.height, required this.state, required this.shortMode})
-      : super(key: key);
+  const _BottomTextContent({
+    Key? key,
+    required this.project,
+    required this.height,
+    required this.state,
+    required this.shortMode,
+  }) : super(key: key);
 
   final ProjectData project;
   final double height;
   final _ProjectsCarouselScreenState state;
   final bool shortMode;
+
   int get _currentPage => state._currentPage.value.round();
 
   @override
@@ -58,6 +63,15 @@ class _BottomTextContent extends StatelessWidget {
                               maxLines: 2,
                             ),
                           ),
+                          Gap($styles.insets.sm),
+                          TextButton(
+                            style: TextButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
+                            child: Text(
+                              'Read more',
+                              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                            ),
+                            onPressed: () => state._handleProjectTap(_currentPage),
+                          )
                           // if (!shortMode) ...[
                           //   Gap($styles.insets.xxs),
                           //   Text(

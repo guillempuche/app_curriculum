@@ -4,13 +4,17 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../common_libs.dart';
+
 class MarkdownRenderer extends StatelessWidget {
   MarkdownRenderer(
     this.markdownData, {
     Key? key,
+    this.style,
   }) : super(key: key);
 
   final String markdownData;
+  final MarkdownStyleSheet? style;
 
   final _webviewController = WebViewController();
 
@@ -27,6 +31,7 @@ class MarkdownRenderer extends StatelessWidget {
 
     return Markdown(
       data: replacedMarkdown,
+      styleSheet: style,
       selectable: true,
       onTapLink: (text, url, title) {
         if (url != null) {
