@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../common_libs.dart';
@@ -27,6 +28,15 @@ class _IntroScreenState extends State<IntroScreen> {
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
   bool get _isOnLastPage => _currentPage.value.round() == pageData.length - 1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Fetch data
+    experiencesLogic.init();
+    projectsLogic.init();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -9,9 +9,9 @@ import '../ui/common/modals/fullscreen_video_viewer.dart';
 import '../ui/common/utils/page_routes.dart';
 
 class AppLogic {
-  /// Indicates to the rest of the app that bootstrap has not completed.
-  /// The router will use this to prevent redirects while bootstrapping.
-  bool isBootstrapComplete = false;
+  // /// Indicates to the rest of the app that bootstrap has not completed.
+  // /// The router will use this to prevent redirects while bootstrapping.
+  // bool isBootstrapComplete = false;
 
   /// Indicates which orientations the app will allow be default. Affects Android/iOS devices only.
   /// Defaults to both landscape (hz) and portrait (vt)
@@ -48,16 +48,16 @@ class AppLogic {
     // Localizations
     await localeLogic.load();
 
-    try {
-      // Fetch data
-      await experiencesLogic.init();
-      await projectsLogic.init();
-    } on Exception catch (e, stack) {
-      await FirebaseCrashlytics.instance.recordError(e, stack);
-    }
+    // try {
+    //   // Fetch data
+    //   await experiencesLogic.init();
+    //   await projectsLogic.init();
+    // } on Exception catch (e, stack) {
+    //   await FirebaseCrashlytics.instance.recordError(e, stack);
+    // }
 
-    // Flag bootStrap as complete
-    isBootstrapComplete = true;
+    // // Flag bootStrap as complete
+    // isBootstrapComplete = true;
   }
 
   Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {

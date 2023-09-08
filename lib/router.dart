@@ -56,8 +56,6 @@ class ScreenUtility {
       return ExperienceDetailScreen(_parseExperienceType(path));
     } else if (path == ScreenPaths.projects) {
       return const ProjectsCarouselScreen();
-      // } else if (path == ScreenPaths.library) {
-      //   return const LibraryScreen();
     } else {
       throw Exception('Invalid path: $path');
     }
@@ -130,10 +128,10 @@ Page<dynamic> pageBuilder(
 
 String? _handleRedirect(BuildContext context, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
-  if (!appLogic.isBootstrapComplete && state.uri.toString() != ScreenPaths.splash) {
-    return ScreenPaths.splash;
-  }
-  debugPrint('Navigate to: ${state.uri.toString()}');
+  // if (!appLogic.isBootstrapComplete && state.uri.toString() != ScreenPaths.splash) {
+  //   return ScreenPaths.splash;
+  // }
+  // debugPrint('Navigate to: ${state.uri.toString()}');
 
   // When opening the root path, redirect to intro screen.
   if (state.uri.toString() == ScreenPaths.splash) {

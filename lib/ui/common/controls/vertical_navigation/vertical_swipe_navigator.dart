@@ -25,10 +25,8 @@ class VerticalSwipeNavigator extends StatelessWidget {
       onVerticalDragEnd: (details) {
         // When velocity is negative, means swipe goes from top to bottom.
         if (forwardDirection != null && goForwardPath != null && details.primaryVelocity! < 0) {
-          // appRouter.push(goForwardPath!, extra: forwardDirection!);
           context.go(goForwardPath!, extra: forwardDirection!);
         } else if (backDirection != null && goBackPath != null && details.primaryVelocity! > 0) {
-          // appRouter.push(goBackPath!, extra: backDirection!);
           context.go(goBackPath!, extra: backDirection!);
         }
       },
@@ -42,7 +40,6 @@ class VerticalSwipeNavigator extends StatelessWidget {
               child: _AnimatedArrowButton(
                 //semanticTitle: currentWonder.title,
                 direction: _ButtonDirection.top,
-                // onTap: () => appRouter.push(goBackPath!, extra: backDirection!),
                 onTap: () => context.go(goBackPath!, extra: backDirection!),
               ),
             ),
@@ -51,7 +48,6 @@ class VerticalSwipeNavigator extends StatelessWidget {
               bottom: 20,
               child: _AnimatedArrowButton(
                 direction: _ButtonDirection.bottom,
-                // onTap: () => appRouter.push(goForwardPath!, extra: forwardDirection!),
                 onTap: () => context.go(goForwardPath!, extra: forwardDirection!),
               ),
             ),
