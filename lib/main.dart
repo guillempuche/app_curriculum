@@ -1,11 +1,15 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:async';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'common_libs.dart';
+import 'firebase_options.dart';
 import 'logic/projects_logic.dart';
 import 'logic/collectibles_logic.dart';
 import 'logic/experiences_logic.dart';
@@ -17,22 +21,74 @@ import 'logic/wonders_logic.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // Keep native splash screen up until app is finished bootstrapping
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await dotenv.load(fileName: ".env");
+  // Handle asynchronous errors.
+  //
+  // More info here https://dart.dev/articles/archive/zones and https://docs.flutter.dev/testing/errors
+  runZonedGuarded<Future<void>>(() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  await Supabase.initialize(url: dotenv.env['API_SUPABASE']!, anonKey: dotenv.env['API_SUPABASE_KEY']!);
+    // Keep native splash screen up until app is finished bootstrapping
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  registerSingletons();
+    // The Flutter framework catches errors that occur during callbacks triggered
+    // by the framework itself, including errors encountered during the build,
+    // layout, and paint phases. Errors that don’t occur within Flutter’s
+    // callbacks can’t be caught by the framework.
+    //
+    // More info on https://docs.flutter.dev/testing/errors.
+    //
+    // The app sends these errors to Firebase Crashlytics.
+    //
+    // Not all errors will be caught here, eg. asynchronous functions errors that come from Dart (an
+    // exception happen inside the onPressed of a button).
+    FlutterError.onError = (details) async {
+      // If automatic data collection is disabled for Crashlytics, crash reports
+      // are stored on the device. To check for reports, use the `checkForUnsentReports`
+      // method. Use `sendUnsentReports` to upload existing reports even when
+      // automatic data collection is disabled. Use [deleteUnsentReports] to
+      // delete any reports stored on the device without sending them to
+      // Crashlytics.
+      //
+      // Temporarily toggle this to true if you want to test crash reporting in
+      // your app.
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
 
-  usePathUrlStrategy();
+      if (kReleaseMode) {
+        await FirebaseCrashlytics.instance.recordError(
+          details.exception,
+          details.stack,
+          information: details.context != null ? [details.context!] : const [],
+        );
+      }
+      // Debug and profile modes.
+      else {
+        // Log the error on the IDE's console.
+        FlutterError.presentError(details);
+      }
+    };
 
-  await appLogic.bootstrap();
-  runApp(App());
+    registerSingletons();
 
-  // Remove splash screen when bootstrap is complete
-  FlutterNativeSplash.remove();
+    usePathUrlStrategy();
+
+    await appLogic.bootstrap();
+    runApp(App());
+
+    // Remove splash screen when bootstrap is complete
+    FlutterNativeSplash.remove();
+  }, (error, stack) {
+    if (kReleaseMode) {
+      FirebaseCrashlytics.instance.recordError(error, stack);
+    }
+    // Debug and profile modes.
+    else {
+      // Log the error on the IDE's console.
+      FlutterError.presentError(FlutterErrorDetails(exception: error, stack: stack));
+    }
+  });
 }
 
 /// Creates an app using the [MaterialApp.router] constructor and the global `appRouter`, an instance of [GoRouter].

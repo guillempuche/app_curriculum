@@ -1,10 +1,7 @@
-import 'dart:html' as html;
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-
 import '../ui/screens/experiences/experience_detail/experience_detail_screen.dart';
-import 'logic/data/experience_data.dart';
 import 'common_libs.dart';
+import 'logic/common/platform_specific.dart' if (dart.library.html) 'logic/common/platform_specific_web.dart';
+import 'logic/data/experience_data.dart';
 // import 'ui/common/modals/fullscreen_video_viewer.dart';
 import 'ui/screens/projects/projects_carousel/projects_carousel_screen.dart';
 import 'ui/screens/projects/project_details/project_details_screen.dart';
@@ -67,32 +64,11 @@ class ScreenUtility {
   }
 }
 
-class PathObserver extends NavigatorObserver {
-  @override
-  void didPush(Route route, Route? previousRoute) {
-    super.didPush(route, previousRoute);
-
-    // This prints the name of the route (or path) that was pushed
-    print('Navigated to ${route.settings.name}');
-  }
-
-  @override
-  void didPop(Route route, Route? previousRoute) {
-    super.didPop(route, previousRoute);
-
-    // This prints the name of the route (or path) that was popped
-    print('Navigated back from ${route.settings.name}');
-  }
-
-  // Similarly, you can override `didReplace` and other methods if needed.
-}
-
 /// Routing table, matches string paths to UI Screens, optionally parses params from the paths
 final appRouter = GoRouter(
   redirect: _handleRedirect,
   routes: [
     ShellRoute(
-        observers: [PathObserver()],
         builder: (context, router, navigator) {
           return AppScaffold(child: navigator);
         },
@@ -139,10 +115,12 @@ Page<dynamic> pageBuilder(
   BuildContext context,
   GoRouterState state,
 ) {
-  final title = getScreenTitles[state.path!];
+  if (PlatformInfo.isWeb) {
+    final title = getScreenTitles[state.path!];
 
-  if (title != null) {
-    html.document.title = title;
+    if (title != null) {
+      PlatformSpecificImpl.setPageTitle(title);
+    }
   }
   return GoRouterTransitionPage.verticalAxis(
     direction: state.extra is TransitionDirection ? state.extra as TransitionDirection : null,

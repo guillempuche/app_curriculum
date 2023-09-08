@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "123445088604",
+    "project_id": "app-curriculum-iag7lg",
+    "storage_bucket": "app-curriculum-iag7lg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123445088604:android:c36233045b641a8e57b199",
+        "android_client_info": {
+          "package_name": "com.guillempuche.guillem_curriculum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123445088604-vd6f0vc7ll1uluhiars8l69sk8i842ln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_-MlyZQ2v3nMcQzE_N02q9X8onAP-v5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123445088604-vd6f0vc7ll1uluhiars8l69sk8i842ln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

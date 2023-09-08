@@ -1,4 +1,6 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 import '../common_libs.dart';
 import 'data/experience_data.dart';
@@ -13,33 +15,32 @@ class ExperiencesLogic {
   }
 
   Future<void> init() async {
-    List<dynamic> allExperiences = await Supabase.instance.client
-        .from('experiences')
-        .select('*')
-        .order(
-          'end_date',
-          ascending: false,
-        )
-        .order(
-          'start_date',
-          ascending: false,
-        );
-    all = allExperiences.map((data) {
-      return _experienceFromJson(data);
-    }).toList();
+    final response = await http.get(Uri.parse(
+        'https://worker-app-curriculum-database.guillempuche.workers.dev/?table=experiences&order=end_date.desc,start_date.desc'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response, parse the JSON.
+      List<dynamic> listExperiences = json.decode(response.body);
+      all = listExperiences.map((experience) {
+        return _experienceFromJson(experience);
+      }).toList();
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception(response.reasonPhrase);
+    }
   }
 }
 
-ExperienceData _experienceFromJson(Map<String, dynamic> json) => ExperienceData(
-      id: json['experience_id'],
-      type: _mapIdToExperienceType(json['experience_id']),
-      title: json['title'],
-      languages: _getLocales(json['languages']),
-      image: json['image'],
-      text: json['text'],
-      startDate: json['start_date'] != null ? DateTime.parse(json['start_date']) : null,
-      endDate: json['end_date'] != null ? DateTime.parse(json['end_date']) : null,
-      location: json['location'],
+ExperienceData _experienceFromJson(Map<String, dynamic> data) => ExperienceData(
+      id: data['experience_id'],
+      type: _mapIdToExperienceType(data['experience_id']),
+      title: data['title'],
+      languages: _getLocales(data['languages']),
+      image: data['image'],
+      text: data['text'],
+      startDate: data['start_date'] != null ? DateTime.parse(data['start_date']) : null,
+      endDate: data['end_date'] != null ? DateTime.parse(data['end_date']) : null,
+      location: data['location'],
     );
 
 ExperienceType _mapIdToExperienceType(String id) {

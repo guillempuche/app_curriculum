@@ -1,4 +1,6 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 import '../common_libs.dart';
 import 'data/project_data.dart';
@@ -13,14 +15,20 @@ class ProjectsLogic {
   }
 
   Future<void> init() async {
-    List<dynamic> allProjects = await Supabase.instance.client.from('projects').select('*').order(
-          'id',
-          ascending: true,
-        );
+    final url =
+        Uri.parse('https://worker-app-curriculum-database.guillempuche.workers.dev?table=projects&order=id.asc');
 
-    all = allProjects.map((data) {
-      return _projectFromJson(data);
-    }).toList();
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response, parse the JSON.
+      List<dynamic> listProjects = json.decode(response.body);
+      all = listProjects.map((project) {
+        return _projectFromJson(project);
+      }).toList();
+    } else {
+      // If the server did not return a 200 OK response, throw an exception.
+      throw Exception(response.reasonPhrase);
+    }
   }
 }
 

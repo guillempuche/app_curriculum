@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import '../common_libs.dart';
-import '../logic/common/platform_info.dart';
 import '../ui/common/modals/fullscreen_video_viewer.dart';
 import '../ui/common/utils/page_routes.dart';
 
@@ -37,9 +37,6 @@ class AppLogic {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
 
-    // // Load any bitmaps the views might need
-    // await AppBitmaps.init();
-
     // Set preferred refresh rate to the max possible (the OS may ignore this)
     if (PlatformInfo.isAndroid) {
       await FlutterDisplayMode.setHighRefreshRate();
@@ -55,16 +52,9 @@ class AppLogic {
       // Fetch data
       await experiencesLogic.init();
       await projectsLogic.init();
-    } on Exception catch (e) {}
-
-    // // Wonders data
-    // wondersLogic.init();
-
-    // Events
-    timelineLogic.init();
-
-    // Collectibles
-    await collectiblesLogic.load();
+    } on Exception catch (e, stack) {
+      await FirebaseCrashlytics.instance.recordError(e, stack);
+    }
 
     // Flag bootStrap as complete
     isBootstrapComplete = true;

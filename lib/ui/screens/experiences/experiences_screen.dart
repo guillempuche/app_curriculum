@@ -28,10 +28,9 @@ class ExperiencesScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTickerProviderStateMixin {
   late final PageController _pageController;
   List<ExperienceData> get _experiences => experiencesLogic.all;
-  bool _isMenuOpen = false;
 
   /// Set initial experienceIndex
-  late int _experienceIndex = 0;
+  int _experienceIndex = 0;
 
   int get _numExperiences => _experiences.length;
 
@@ -271,7 +270,7 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
       AnimatedSwitcher(
         duration: $styles.times.fast,
         child: AnimatedOpacity(
-          opacity: _isMenuOpen ? 0 : 1,
+          opacity: 1,
           duration: $styles.times.med,
           child: RepaintBoundary(
             child: OverflowBox(
@@ -299,7 +298,6 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                                   header: true,
                                   onIncrease: () => _setPageIndex(_experienceIndex + 1),
                                   onDecrease: () => _setPageIndex(_experienceIndex - 1),
-                                  // onTap: () => _showDetailsPage(context),
                                   // Hide the title when the menu is open for visual polish
                                   child: ExperienceTitleText(currentExperience, enableShadows: true),
                                 ),
