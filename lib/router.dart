@@ -2,17 +2,9 @@ import '../ui/screens/experiences/experience_detail/experience_detail_screen.dar
 import 'common_libs.dart';
 import 'logic/common/platform_specific.dart' if (dart.library.html) 'logic/common/platform_specific_web.dart';
 import 'logic/data/experience_data.dart';
-// import 'ui/common/modals/fullscreen_video_viewer.dart';
 import 'ui/screens/projects/projects_carousel/projects_carousel_screen.dart';
-import 'ui/screens/projects/project_details/project_details_screen.dart';
-// import 'ui/screens/artifact/artifact_search/artifact_search_screen.dart';
-// import 'ui/screens/collection/collection_screen.dart';
 import 'ui/screens/experiences/experiences_screen.dart';
 import 'ui/screens/intro/intro_screen.dart';
-// import 'ui/screens/timeline/timeline_screen.dart';
-// import 'ui/screens/wallpaper_photo/wallpaper_photo_screen.dart';
-// import 'ui/screens/wonder_details/wonders_details_screen.dart';
-// import 'ui/screens/library/library_screen.dart';
 
 /// Shared paths / urls used across the app
 class ScreenPaths {
@@ -20,7 +12,6 @@ class ScreenPaths {
   static String intro = '/introduction';
   static String experiences = '/experiences';
   static String projects = '/projects';
-  static String settings = '/settings';
   static String experienceRoot = '/experience/';
   static String experienceDetails(ExperienceType type) => '${ScreenPaths.experienceRoot}${type.name}';
   // static String experienceDetails(ExperienceType type, {int tabIndex = 0}) =>
@@ -41,7 +32,6 @@ Map<String, String> getScreenTitles = {
   ScreenPaths.intro: 'Introduction',
   ScreenPaths.experiences: 'Experiences',
   ScreenPaths.projects: 'Projects',
-  ScreenPaths.settings: 'Settings',
 };
 
 class ScreenUtility {
@@ -126,7 +116,7 @@ Page<dynamic> pageBuilder(
   );
 }
 
-String? _handleRedirect(BuildContext context, GoRouterState state) {
+String? _handleRedirect(_, GoRouterState state) {
   // Prevent anyone from navigating away from `/` if app is starting up.
   // if (!appLogic.isBootstrapComplete && state.uri.toString() != ScreenPaths.splash) {
   //   return ScreenPaths.splash;

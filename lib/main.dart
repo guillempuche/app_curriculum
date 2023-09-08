@@ -30,8 +30,8 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    // Keep native splash screen up until app is finished bootstrapping
-    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+    // // Keep native splash screen up until app is finished bootstrapping
+    // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
     // The Flutter framework catches errors that occur during callbacks triggered
     // by the framework itself, including errors encountered during the build,
@@ -77,8 +77,8 @@ void main() async {
     await appLogic.bootstrap();
     runApp(App());
 
-    // Remove splash screen when bootstrap is complete
-    FlutterNativeSplash.remove();
+    // // Remove splash screen when bootstrap is complete
+    // FlutterNativeSplash.remove();
   }, (error, stack) {
     if (kReleaseMode) {
       FirebaseCrashlytics.instance.recordError(error, stack);
