@@ -5,8 +5,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'common_libs.dart';
 import 'firebase_options.dart';
@@ -20,8 +18,6 @@ import 'logic/wallpaper_logic.dart';
 import 'logic/wonders_logic.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
   // Handle asynchronous errors.
   //
   // More info here https://dart.dev/articles/archive/zones and https://docs.flutter.dev/testing/errors
@@ -30,6 +26,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
+    // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     // // Keep native splash screen up until app is finished bootstrapping
     // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -63,7 +60,7 @@ void main() async {
           information: details.context != null ? [details.context!] : const [],
         );
       }
-      // Debug and profile modes.
+      // Debug and rest of profile modes.
       else {
         // Log the error on the IDE's console.
         FlutterError.presentError(details);
@@ -72,10 +69,9 @@ void main() async {
 
     registerSingletons();
 
-    usePathUrlStrategy();
+    runApp(App());
 
     await appLogic.bootstrap();
-    runApp(App());
 
     // // Remove splash screen when bootstrap is complete
     // FlutterNativeSplash.remove();
@@ -83,7 +79,7 @@ void main() async {
     if (kReleaseMode) {
       FirebaseCrashlytics.instance.recordError(error, stack);
     }
-    // Debug and profile modes.
+    // Debug and rest of profile modes.
     else {
       // Log the error on the IDE's console.
       FlutterError.presentError(FlutterErrorDetails(exception: error, stack: stack));
@@ -104,9 +100,6 @@ class App extends StatelessWidget with GetItMixin {
       routeInformationParser: appRouter.routeInformationParser,
       routerDelegate: appRouter.routerDelegate,
       title: 'Guillem Curriculum',
-      // onGenerateTitle: (context) {
-      //   return getScreenTitles[GoRouter.of(context)..toString()] ?? 'Guillem Curriculum';
-      // },
       theme: ThemeData(
         fontFamily: $styles.text.body.fontFamily,
         useMaterial3: true,

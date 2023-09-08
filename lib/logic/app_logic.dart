@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import '../common_libs.dart';
 import '../ui/common/modals/fullscreen_video_viewer.dart';
 import '../ui/common/utils/page_routes.dart';
@@ -32,6 +32,8 @@ class AppLogic {
   Future<void> bootstrap() async {
     debugPrint('bootstrap start...');
 
+    usePathUrlStrategy();
+
     // Set min-sizes for desktop apps
     if (PlatformInfo.isDesktop) {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
@@ -42,19 +44,11 @@ class AppLogic {
       await FlutterDisplayMode.setHighRefreshRate();
     }
 
-    // Settings
-    await settingsLogic.load();
+    // // // Settings
+    // await settingsLogic.load();
 
     // Localizations
     await localeLogic.load();
-
-    // try {
-    //   // Fetch data
-    //   await experiencesLogic.init();
-    //   await projectsLogic.init();
-    // } on Exception catch (e, stack) {
-    //   await FirebaseCrashlytics.instance.recordError(e, stack);
-    // }
 
     // // Flag bootStrap as complete
     // isBootstrapComplete = true;
@@ -99,13 +93,5 @@ class AppLogic {
       ]);
     }
     SystemChrome.setPreferredOrientations(orientations);
-  }
-}
-
-class AppImageCache extends WidgetsFlutterBinding {
-  @override
-  ImageCache createImageCache() {
-    this.imageCache.maximumSizeBytes = 250 << 20; // 250mb
-    return super.createImageCache();
   }
 }
