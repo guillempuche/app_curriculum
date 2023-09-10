@@ -32,6 +32,7 @@ class AppLogic {
   Future<void> bootstrap() async {
     debugPrint('bootstrap start...');
 
+    // Remove `#` from the URL.
     usePathUrlStrategy();
 
     // Set min-sizes for desktop apps

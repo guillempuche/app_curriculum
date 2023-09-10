@@ -18,6 +18,8 @@ import 'logic/wallpaper_logic.dart';
 import 'logic/wonders_logic.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Handle asynchronous errors.
   //
   // More info here https://dart.dev/articles/archive/zones and https://docs.flutter.dev/testing/errors
