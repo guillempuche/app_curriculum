@@ -53,9 +53,9 @@ void main() async {
       //
       // Temporarily toggle this to true if you want to test crash reporting in
       // your app.
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode && !PlatformInfo.isWeb);
 
-      if (kReleaseMode) {
+      if (kReleaseMode && !PlatformInfo.isWeb) {
         await FirebaseCrashlytics.instance.recordError(
           details.exception,
           details.stack,
@@ -78,7 +78,7 @@ void main() async {
     // // Remove splash screen when bootstrap is complete
     // FlutterNativeSplash.remove();
   }, (error, stack) {
-    if (kReleaseMode) {
+    if (kReleaseMode && !PlatformInfo.isWeb) {
       FirebaseCrashlytics.instance.recordError(error, stack);
     }
     // Debug and rest of profile modes.
