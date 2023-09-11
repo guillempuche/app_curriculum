@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:desktop_window/desktop_window.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
+// import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import '../common_libs.dart';
 import '../ui/common/modals/fullscreen_video_viewer.dart';
@@ -40,10 +40,10 @@ class AppLogic {
       await DesktopWindow.setMinWindowSize($styles.sizes.minAppSize);
     }
 
-    // Set preferred refresh rate to the max possible (the OS may ignore this)
-    if (PlatformInfo.isAndroid) {
-      await FlutterDisplayMode.setHighRefreshRate();
-    }
+    // // Set preferred refresh rate to the max possible (the OS may ignore this)
+    // if (PlatformInfo.isAndroid) {
+    //   await FlutterDisplayMode.setHighRefreshRate();
+    // }
 
     // // // Settings
     // await settingsLogic.load();
