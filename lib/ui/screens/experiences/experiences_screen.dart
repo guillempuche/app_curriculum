@@ -1,10 +1,5 @@
 import '../../../../../common_libs.dart';
-import '../../../../logic/data/experience_data.dart';
-import '../../../../logic/data/wonder_data.dart';
-import '../../common/app_icons.dart';
-import '../../common/controls/app_header.dart';
 import '../../common/controls/app_page_indicator.dart';
-import '../../common/gradient_container.dart';
 import '../../common/themed_text.dart';
 import '../../common/utils/app_haptics.dart';
 import '../../wonder_illustrations/common/animated_clouds.dart';

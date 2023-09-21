@@ -19,12 +19,12 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Curriculum Vitae of Guillem.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="guillem_curriculum">
+  <meta name="apple-mobile-web-app-title" content="Curriculum Vitae of Guillem">
   <link rel="apple-touch-icon" href="icons/icon-rounded-x1.png">
 
   <!-- Favicon -->
@@ -35,7 +35,7 @@
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "2247632438";
+    const serviceWorkerVersion = "2671222167";
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer=""></script>
@@ -114,7 +114,7 @@
   <picture id="splash">
     <source srcset="splash/img/icon-rounded-1x.png 1x, splash/img/icon-rounded-2x.png 2x"
       media="(prefers-color-scheme: light)">
-    <source srcset="splash/img/icon-rounded1-1x.png 1x, splash/img/icon-rounded-2x.png 2x"
+    <source srcset="splash/img/icon-rounded-1x.png 1x, splash/img/icon-rounded-2x.png 2x"
       media="(prefers-color-scheme: dark)">
     <img class="center" aria-hidden="true" src="splash/img/icon-rounded-1x.png" alt="">
   </picture>
@@ -126,7 +126,12 @@
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function (engineInitializer) {
-          engineInitializer.initializeEngine().then(function (appRunner) {
+          engineInitializer.initializeEngine(
+            {
+              renderer: "canvaskit",
+              debugShowSemanticNodes: true
+            }
+          ).then(function (appRunner) {
             appRunner.runApp();
           });
         }

@@ -26,8 +26,6 @@ class AppLogic {
   /// Initialize the app and all main actors.
   /// Loads settings, sets up services etc.
   Future<void> bootstrap() async {
-    debugPrint('bootstrap start...');
-
     // Remove `#` from the URL.
     usePathUrlStrategy();
 
@@ -72,7 +70,6 @@ class AppLogic {
   /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
   void _updateSystemOrientation() {
     final axisList = _supportedOrientationsOverride ?? supportedOrientations;
-    debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
 
     final orientations = <DeviceOrientation>[];
 

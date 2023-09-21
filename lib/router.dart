@@ -133,12 +133,6 @@ Page<dynamic> pageBuilder(
 }
 
 String? _handleRedirect(_, GoRouterState state) {
-  // Prevent anyone from navigating away from `/` if app is starting up.
-  // if (!appLogic.isBootstrapComplete && state.uri.toString() != ScreenPaths.splash) {
-  //   return ScreenPaths.splash;
-  // }
-  // debugPrint('Navigate to: ${state.uri.toString()}');
-
   // When opening the root path, redirect to intro screen.
   if (state.uri.toString() == ScreenPaths.splash) {
     return ScreenPaths.intro;
