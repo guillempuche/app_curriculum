@@ -1,13 +1,14 @@
 import '../common_libs.dart';
 import '../logic/common/color_utils.dart';
 
-export 'wonders_color_extensions.dart';
+export 'wonders_color_extensions.dart' hide ColorFilterOnColor;
+export 'experiences_color_extensions.dart';
 
 class AppColors {
   /// Common
-  final Color accent1 = Color(0xFFE4935D);
-  final Color accent2 = Color(0xFFBEABA1);
-  final Color offWhite = Color(0xFFF8ECE5);
+  final Color accent1 = const Color(0xFFE4935D);
+  final Color accent2 = const Color(0xFFBEABA1);
+  final Color offWhite = const Color(0xFFF8ECE5);
   final Color caption = const Color(0xFF7D7873);
   final Color body = const Color(0xFF514F4D);
   final Color greyStrong = const Color(0xFF272625);
@@ -17,13 +18,11 @@ class AppColors {
 
   final bool isDark = false;
 
-  Color shift(Color c, double d) =>
-      ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
+  Color shift(Color c, double d) => ColorUtils.shiftHsl(c, d * (isDark ? -1 : 1));
 
   ThemeData toThemeData() {
     /// Create a TextTheme and ColorScheme, that we can use to generate ThemeData
-    TextTheme txtTheme =
-        (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
+    TextTheme txtTheme = (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
     Color txtColor = white;
     ColorScheme colorScheme = ColorScheme(
         // Map our custom theme to the Material ColorScheme
@@ -43,8 +42,7 @@ class AppColors {
 
     /// Now that we have ColorScheme and TextTheme, we can create the ThemeData
     /// Also add on some extra properties that ColorScheme seems to miss
-    var t =
-        ThemeData.from(textTheme: txtTheme, colorScheme: colorScheme).copyWith(
+    var t = ThemeData.from(textTheme: txtTheme, colorScheme: colorScheme).copyWith(
       textSelectionTheme: TextSelectionThemeData(cursorColor: accent1),
       highlightColor: accent1,
     );

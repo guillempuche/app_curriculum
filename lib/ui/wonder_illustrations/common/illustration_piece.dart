@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import '../../../common_libs.dart';
-import './wonder_illustration_builder.dart';
+import './experience_illustration_builder.dart';
 
 /// Combines [Align], [FractionalBoxWithMinSize], [Image] and [Transform.translate]
 /// to standardize behavior across the various wonder illustrations
@@ -66,9 +66,10 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
   ui.Image? uiImage;
   @override
   Widget build(BuildContext context) {
-    final wonderBuilder = context.watch<WonderIllustrationBuilderState>();
-    final type = wonderBuilder.widget.wonderType;
+    final experienceBuilder = context.watch<ExperienceIllustrationBuilderState>();
+    final type = experienceBuilder.widget.experienceType;
     final imgPath = '${type.assetPath}/${widget.fileName}';
+
     // Dynamically determine the aspect ratio of the image, so we can more easily position it
     if (aspectRatio == null) {
       aspectRatio == 0; // indicates load has started, so we don't run twice
@@ -78,25 +79,23 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
         setState(() => aspectRatio = uiImage!.width / uiImage!.height);
       });
     }
+
     return Align(
       alignment: widget.alignment,
       child: LayoutBuilder(
           key: ValueKey(aspectRatio),
           builder: (_, constraints) {
-            final anim = wonderBuilder.anim;
+            final anim = experienceBuilder.anim;
             final curvedAnim = Curves.easeOut.transform(anim.value);
-            final config = wonderBuilder.widget.config;
-            Widget img =
-                Image.asset(imgPath, opacity: anim, fit: BoxFit.fitHeight);
+            final config = experienceBuilder.widget.config;
+            Widget img = Image.asset(imgPath, opacity: anim, fit: BoxFit.fitHeight);
             // Add overflow box so image doesn't get clipped as we translate it around
             img = OverflowBox(maxWidth: 2500, child: img);
 
-            final double introZoom =
-                (widget.initialScale - 1) * (1 - curvedAnim);
+            final double introZoom = (widget.initialScale - 1) * (1 - curvedAnim);
 
             /// Determine target height
-            final double height = max(widget.minHeight ?? 0,
-                constraints.maxHeight * widget.heightFactor);
+            final double height = max(widget.minHeight ?? 0, constraints.maxHeight * widget.heightFactor);
 
             /// Combine all the translations, initial + offset + dynamicHzOffset + fractionalOffset
             Offset finalTranslation = widget.offset;
@@ -105,10 +104,8 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
               finalTranslation += widget.initialOffset * (1 - curvedAnim);
             }
             // Dynamic
-            final dynamicOffsetAmt =
-                ((context.widthPx - 400) / 1100).clamp(0, 1);
-            finalTranslation +=
-                Offset(dynamicOffsetAmt * widget.dynamicHzOffset, 0);
+            final dynamicOffsetAmt = ((context.widthPx - 400) / 1100).clamp(0, 1);
+            finalTranslation += Offset(dynamicOffsetAmt * widget.dynamicHzOffset, 0);
             // Fractional
             final width = height * (aspectRatio ?? 0);
             if (widget.fractionalOffset != null) {
@@ -134,15 +131,11 @@ class _IllustrationPieceState extends State<IllustrationPiece> {
 
             return Stack(
               children: [
-                if (widget.bottom != null)
-                  Positioned.fill(child: widget.bottom!.call(context)),
+                if (widget.bottom != null) Positioned.fill(child: widget.bottom!.call(context)),
                 if (uiImage != null) ...[
-                  widget.enableHero
-                      ? Hero(tag: '$type-${widget.fileName}', child: content!)
-                      : content!,
+                  widget.enableHero ? Hero(tag: '$type-${widget.fileName}', child: content!) : content!,
                 ],
-                if (widget.top != null)
-                  Positioned.fill(child: widget.top!.call(context)),
+                if (widget.top != null) Positioned.fill(child: widget.top!.call(context)),
               ],
             );
           }),

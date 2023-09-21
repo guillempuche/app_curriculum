@@ -11,7 +11,6 @@ import '../../wonder_illustrations/common/animated_clouds.dart';
 import '../../wonder_illustrations/common/experience_illustration.dart';
 import '../../wonder_illustrations/common/wonder_illustration_config.dart';
 import '../../wonder_illustrations/common/experience_title_text.dart';
-import '../home_menu/home_menu.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
@@ -55,6 +54,7 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
   @override
   void initState() {
     super.initState();
+
     // Create page controller,
     // allow 'infinite' scrolling by starting at a very high page, or remember the previous value
     final initialPage = _numExperiences * 9999;
@@ -106,23 +106,23 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
 
   @override
   void dispose() {
-    _swipeController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
   void _showDetailsPage(BuildContext context) async {
     _swipeOverride = _swipeController.swipeAmt.value;
-    await Future.delayed(100.ms);
+    // await Future.delayed(100.ms);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
     context.push(ScreenPaths.experienceDetails(currentExperience.type));
   }
 
   void _handlePageChanged(value) {
-    setState(() {
-      _experienceIndex = value % _numExperiences;
-    });
-    AppHaptics.lightImpact();
+    if (mounted) {
+      setState(() => _experienceIndex = value % _numExperiences);
+      AppHaptics.lightImpact();
+    }
   }
 
   void _handlePageIndicatorDotPressed(int index) => _setPageIndex(index);
@@ -134,19 +134,6 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
     final pos = ((_pageController.page ?? 0) / _numExperiences).floor() * _numExperiences;
     _pageController.jumpToPage(pos + index);
   }
-
-  // void _handleOpenMenuPressed() async {
-  //   setState(() => _isMenuOpen = true);
-  //   WonderType? pickedWonder = await appLogic.showFullscreenDialogRoute<WonderType>(
-  //     context,
-  //     HomeMenu(data: currentExperience),
-  //     transparent: true,
-  //   );
-  //   setState(() => _isMenuOpen = false);
-  //   if (pickedWonder != null) {
-  //     _setPageIndex(_experiences.indexWhere((w) => w.type == pickedWonder));
-  //   }
-  // }
 
   void _handleFadeAnimInit(AnimationController controller) {
     _fadeAnims.add(controller);

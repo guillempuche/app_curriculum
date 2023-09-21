@@ -19,6 +19,8 @@ export 'package:sized_context/sized_context.dart';
 
 export './assets.dart';
 export './logic/app_logic.dart';
+export './logic/data/experience_data.dart';
+export './logic/data/project_data.dart';
 export './logic/data/wonder_type.dart';
 export './logic/settings_logic.dart';
 export './logic/common/platform_info.dart';

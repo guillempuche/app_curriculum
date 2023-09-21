@@ -10,8 +10,9 @@ desktop.ini
 .history
 .svn/
 
-# Environment variables
+# Keys and environment variables
 .env
+key.properties
 
 # Mock data
 *.mock.*

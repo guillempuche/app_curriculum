@@ -9,10 +9,6 @@ import '../ui/common/modals/fullscreen_video_viewer.dart';
 import '../ui/common/utils/page_routes.dart';
 
 class AppLogic {
-  // /// Indicates to the rest of the app that bootstrap has not completed.
-  // /// The router will use this to prevent redirects while bootstrapping.
-  // bool isBootstrapComplete = false;
-
   /// Indicates which orientations the app will allow be default. Affects Android/iOS devices only.
   /// Defaults to both landscape (hz) and portrait (vt)
   List<Axis> supportedOrientations = [Axis.vertical, Axis.horizontal];
@@ -50,9 +46,6 @@ class AppLogic {
 
     // Localizations
     await localeLogic.load();
-
-    // // Flag bootStrap as complete
-    // isBootstrapComplete = true;
   }
 
   Future<T?> showFullscreenDialogRoute<T>(BuildContext context, Widget child, {bool transparent = false}) async {
@@ -79,8 +72,10 @@ class AppLogic {
   /// If a view overrides this, it is responsible for setting it back to [supportedOrientations] when disposed.
   void _updateSystemOrientation() {
     final axisList = _supportedOrientationsOverride ?? supportedOrientations;
-    //debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
+    debugPrint('updateDeviceOrientation, supportedAxis: $axisList');
+
     final orientations = <DeviceOrientation>[];
+
     if (axisList.contains(Axis.vertical)) {
       orientations.addAll([
         DeviceOrientation.portraitUp,

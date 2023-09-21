@@ -1,19 +1,4 @@
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import './logic/common/platform_info.dart';
 import './common_libs.dart';
-import 'logic/data/experience_data.dart';
-
-// /// Loads bitmap assets into memory that may be required later
-// class AppBitmaps {
-//   static late final BitmapDescriptor mapMarker;
-
-//   static Future<void> init() async {
-//     mapMarker = await BitmapDescriptor.fromAssetImage(
-//       ImageConfiguration(devicePixelRatio: PlatformInfo.pixelRatio),
-//       '${ImagePaths.common}/location-pin.png',
-//     );
-//   }
-// }
 
 /// Consolidates raster image paths used across the app
 class ImagePaths {
@@ -72,27 +57,20 @@ extension WonderAssetExtensions on WonderType {
   String get flattened => '$assetPath/flattened.jpg';
 }
 
-/// For wonder specific assets, add an extension to [ExperienceType] for easy lookup
+/// For experience specific assets, add an extension to [ExperienceType] for easy lookup
 extension ExperienceAssetExtensions on ExperienceType {
   String get assetPath {
     switch (this) {
       case ExperienceType.softwareDeveloper:
-        return '${ImagePaths.root}/marketing';
+        return '${ImagePaths.root}/software';
       case ExperienceType.crypto:
-        return '${ImagePaths.root}/marketing';
+        return '${ImagePaths.root}/crypto';
       case ExperienceType.marketing:
         return '${ImagePaths.root}/marketing';
       case ExperienceType.chatbot:
-        return '${ImagePaths.root}/marketing';
+        return '${ImagePaths.root}/chatbot';
       case ExperienceType.others:
-        return '${ImagePaths.root}/marketing';
+        return '${ImagePaths.root}/others';
     }
   }
-
-  String get homeBtn => '$assetPath/wonder-button.png';
-  String get photo1 => '$assetPath/photo-1.jpg';
-  String get photo2 => '$assetPath/photo-2.jpg';
-  String get photo3 => '$assetPath/photo-3.jpg';
-  String get photo4 => '$assetPath/photo-4.jpg';
-  String get flattened => '$assetPath/flattened.jpg';
 }

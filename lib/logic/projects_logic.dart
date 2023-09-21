@@ -15,8 +15,8 @@ class ProjectsLogic {
   }
 
   Future<void> init() async {
-    final url =
-        Uri.parse('https://worker-app-curriculum-database.guillempuche.workers.dev?table=projects&order=id.asc');
+    final url = Uri.parse(
+        'https://worker-app-curriculum-database.guillempuche.workers.dev?table=projects&order=id.asc.nullslast');
 
     final response = await http.get(url);
     if (response.statusCode == 200) {

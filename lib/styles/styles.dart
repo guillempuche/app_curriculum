@@ -61,34 +61,31 @@ class _Text {
   final double _scale;
 
   final Map<String, TextStyle> _titleFonts = {
-    'en': TextStyle(fontFamily: 'Tenor'),
+    'en': const TextStyle(fontFamily: 'Tenor'),
   };
 
   final Map<String, TextStyle> _monoTitleFonts = {
-    'en': TextStyle(fontFamily: 'B612Mono'),
+    'en': const TextStyle(fontFamily: 'B612Mono'),
   };
 
   final Map<String, TextStyle> _quoteFonts = {
-    'en': TextStyle(fontFamily: 'Cinzel'),
-    'zh': TextStyle(fontFamily: 'MaShanZheng'),
+    'en': const TextStyle(fontFamily: 'Cinzel'),
+    'zh': const TextStyle(fontFamily: 'MaShanZheng'),
   };
 
   final Map<String, TextStyle> _wonderTitleFonts = {
-    'en': TextStyle(fontFamily: 'Yeseva'),
+    'en': const TextStyle(fontFamily: 'Yeseva'),
   };
 
   final Map<String, TextStyle> _contentFonts = {
-    'en': TextStyle(fontFamily: 'Raleway', fontFeatures: const [
+    'en': const TextStyle(fontFamily: 'Raleway', fontFeatures: [
       FontFeature.enable('kern'),
     ]),
   };
 
   TextStyle _getFontForLocale(Map<String, TextStyle> fonts) {
     if (localeLogic.isLoaded) {
-      return fonts.entries
-          .firstWhere((x) => x.key == $strings.localeName,
-              orElse: () => fonts.entries.first)
-          .value;
+      return fonts.entries.firstWhere((x) => x.key == $strings.localeName, orElse: () => fonts.entries.first).value;
     } else {
       return fonts.entries.first.value;
     }
@@ -100,55 +97,37 @@ class _Text {
   TextStyle get contentFont => _getFontForLocale(_contentFonts);
   TextStyle get monoTitleFont => _getFontForLocale(_monoTitleFonts);
 
-  late final TextStyle dropCase =
-      _createFont(quoteFont, sizePx: 56, heightPx: 20);
+  late final TextStyle dropCase = _createFont(quoteFont, sizePx: 56, heightPx: 20);
 
-  late final TextStyle wonderTitle =
-      _createFont(wonderTitleFont, sizePx: 64, heightPx: 56);
+  late final TextStyle wonderTitle = _createFont(wonderTitleFont, sizePx: 64, heightPx: 56);
 
   late final TextStyle h1 = _createFont(titleFont, sizePx: 64, heightPx: 62);
   late final TextStyle h2 = _createFont(titleFont, sizePx: 32, heightPx: 46);
-  late final TextStyle h3 =
-      _createFont(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
-  late final TextStyle h4 = _createFont(contentFont,
-      sizePx: 14, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+  late final TextStyle h3 = _createFont(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
+  late final TextStyle h4 = _createFont(contentFont, sizePx: 19, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
 
-  late final TextStyle title1 =
-      _createFont(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
-  late final TextStyle title2 =
-      _createFont(titleFont, sizePx: 14, heightPx: 16.38);
+  late final TextStyle title1 = _createFont(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
+  late final TextStyle title2 = _createFont(titleFont, sizePx: 14, heightPx: 16.38);
 
-  late final TextStyle body =
-      _createFont(contentFont, sizePx: 16, heightPx: 26);
-  late final TextStyle bodyBold = _createFont(contentFont,
-      sizePx: 16, heightPx: 26, weight: FontWeight.w600);
-  late final TextStyle bodySmall =
-      _createFont(contentFont, sizePx: 14, heightPx: 23);
-  late final TextStyle bodySmallBold = _createFont(contentFont,
-      sizePx: 14, heightPx: 23, weight: FontWeight.w600);
+  late final TextStyle body = _createFont(contentFont, sizePx: 16, heightPx: 26);
+  late final TextStyle bodyBold = _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600);
+  late final TextStyle bodySmall = _createFont(contentFont, sizePx: 14, heightPx: 23);
+  late final TextStyle bodySmallBold = _createFont(contentFont, sizePx: 14, heightPx: 23, weight: FontWeight.w600);
 
-  late final TextStyle quote1 = _createFont(quoteFont,
-      sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
-  late final TextStyle quote2 =
-      _createFont(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
-  late final TextStyle quote2Sub =
-      _createFont(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
+  late final TextStyle quote1 =
+      _createFont(quoteFont, sizePx: 32, heightPx: 40, weight: FontWeight.w600, spacingPc: -3);
+  late final TextStyle quote2 = _createFont(quoteFont, sizePx: 21, heightPx: 32, weight: FontWeight.w400);
+  late final TextStyle quote2Sub = _createFont(body, sizePx: 16, heightPx: 40, weight: FontWeight.w400);
 
-  late final TextStyle caption = _createFont(contentFont,
-          sizePx: 14, heightPx: 20, weight: FontWeight.w500)
-      .copyWith(fontStyle: FontStyle.italic);
+  late final TextStyle caption =
+      _createFont(contentFont, sizePx: 14, heightPx: 20, weight: FontWeight.w500).copyWith(fontStyle: FontStyle.italic);
 
-  late final TextStyle callout = _createFont(contentFont,
-          sizePx: 16, heightPx: 26, weight: FontWeight.w600)
-      .copyWith(fontStyle: FontStyle.italic);
-  late final TextStyle btn = _createFont(contentFont,
-      sizePx: 14, weight: FontWeight.w500, spacingPc: 2, heightPx: 14);
+  late final TextStyle callout =
+      _createFont(contentFont, sizePx: 16, heightPx: 26, weight: FontWeight.w600).copyWith(fontStyle: FontStyle.italic);
+  late final TextStyle btn = _createFont(contentFont, sizePx: 14, weight: FontWeight.w500, spacingPc: 2, heightPx: 14);
 
   TextStyle _createFont(TextStyle style,
-      {required double sizePx,
-      double? heightPx,
-      double? spacingPc,
-      FontWeight? weight}) {
+      {required double sizePx, double? heightPx, double? spacingPc, FontWeight? weight}) {
     sizePx *= _scale;
     if (heightPx != null) {
       heightPx *= _scale;
@@ -156,18 +135,17 @@ class _Text {
     return style.copyWith(
         fontSize: sizePx,
         height: heightPx != null ? (heightPx / sizePx) : style.height,
-        letterSpacing:
-            spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
+        letterSpacing: spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
         fontWeight: weight);
   }
 }
 
 @immutable
 class _Times {
-  final Duration fast = Duration(milliseconds: 300);
-  final Duration med = Duration(milliseconds: 600);
-  final Duration slow = Duration(milliseconds: 900);
-  final Duration pageTransition = Duration(milliseconds: 200);
+  final Duration fast = const Duration(milliseconds: 300);
+  final Duration med = const Duration(milliseconds: 600);
+  final Duration slow = const Duration(milliseconds: 900);
+  final Duration pageTransition = const Duration(milliseconds: 200);
 }
 
 @immutable
@@ -182,7 +160,7 @@ class _Sizes {
   double get maxContentWidth1 => 800;
   double get maxContentWidth2 => 600;
   double get maxContentWidth3 => 500;
-  final Size minAppSize = Size(380, 250);
+  final Size minAppSize = const Size(380, 250);
 }
 
 @immutable
@@ -203,21 +181,12 @@ class _Insets {
 @immutable
 class _Shadows {
   final textSoft = [
-    Shadow(
-        color: Colors.black.withOpacity(.25),
-        offset: Offset(0, 2),
-        blurRadius: 4),
+    Shadow(color: Colors.black.withOpacity(.25), offset: const Offset(0, 2), blurRadius: 4),
   ];
   final text = [
-    Shadow(
-        color: Colors.black.withOpacity(.6),
-        offset: Offset(0, 2),
-        blurRadius: 2),
+    Shadow(color: Colors.black.withOpacity(.6), offset: const Offset(0, 2), blurRadius: 2),
   ];
   final textStrong = [
-    Shadow(
-        color: Colors.black.withOpacity(.6),
-        offset: Offset(0, 4),
-        blurRadius: 6),
+    Shadow(color: Colors.black.withOpacity(.6), offset: const Offset(0, 4), blurRadius: 6),
   ];
 }

@@ -18,12 +18,12 @@ import 'logic/wallpaper_logic.dart';
 import 'logic/wonders_logic.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   // Handle asynchronous errors.
   //
   // More info here https://dart.dev/articles/archive/zones and https://docs.flutter.dev/testing/errors
   runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -53,7 +53,7 @@ void main() async {
       //
       // Temporarily toggle this to true if you want to test crash reporting in
       // your app.
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode && !PlatformInfo.isWeb);
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
 
       if (kReleaseMode && !PlatformInfo.isWeb) {
         await FirebaseCrashlytics.instance.recordError(
@@ -68,6 +68,9 @@ void main() async {
         FlutterError.presentError(details);
       }
     };
+
+    //   // Keep native splash screen up until app is finished bootstrapping
+    // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
     registerSingletons();
 
@@ -97,25 +100,39 @@ class App extends StatelessWidget with GetItMixin {
   Widget build(BuildContext context) {
     final locale = watchX((SettingsLogic s) => s.currentLocale);
 
-    return MaterialApp.router(
-      routeInformationProvider: appRouter.routeInformationProvider,
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
-      title: 'Guillem Curriculum',
-      theme: ThemeData(
-        fontFamily: $styles.text.body.fontFamily,
-        useMaterial3: true,
-      ),
-      locale: locale == null ? null : Locale(locale),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      debugShowCheckedModeBanner: false,
-    );
+    return FutureBuilder(
+        future: fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MaterialApp.router(
+              routeInformationProvider: appRouter.routeInformationProvider,
+              routeInformationParser: appRouter.routeInformationParser,
+              routerDelegate: appRouter.routerDelegate,
+              title: 'Guillem Curriculum',
+              theme: ThemeData(
+                fontFamily: $styles.text.body.fontFamily,
+                useMaterial3: true,
+              ),
+              locale: locale == null ? null : Locale(locale),
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              debugShowCheckedModeBanner: false,
+            );
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          return Center(child: CircularProgressIndicator());
+        });
+  }
+
+  Future<void> fetchData() async {
+    await experiencesLogic.init();
+    await projectsLogic.init();
   }
 }
 

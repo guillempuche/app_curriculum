@@ -1,11 +1,10 @@
 import '../../../common_libs.dart';
-import '../../../logic/data/experience_data.dart';
-import '../chichen_itza_illustration.dart';
-import '../christ_redeemer_illustration.dart';
-import '../colosseum_illustration.dart';
+import '../software_illustration.dart';
+import '../crypto_illustration.dart';
+import '../marketing_illustration.dart';
 import '../common/wonder_illustration_config.dart';
-import '../great_wall_illustration.dart';
-import '../machu_picchu_illustration.dart';
+import '../chatbot_illustration.dart';
+import '../others_illustration.dart';
 
 /// Convenience class for showing an illustration when all you have is the type.
 class ExperienceIllustration extends StatelessWidget {

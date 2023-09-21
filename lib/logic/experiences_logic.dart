@@ -16,7 +16,7 @@ class ExperiencesLogic {
 
   Future<void> init() async {
     final response = await http.get(Uri.parse(
-        'https://worker-app-curriculum-database.guillempuche.workers.dev/?table=experiences&order=end_date.desc,start_date.desc'));
+        'https://worker-app-curriculum-database.guillempuche.workers.dev/?table=experiences&order=end_date.desc.nullslast,start_date.desc.nullslast'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response, parse the JSON.

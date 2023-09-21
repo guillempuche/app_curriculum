@@ -2,6 +2,7 @@ import '../ui/screens/experiences/experience_detail/experience_detail_screen.dar
 import 'common_libs.dart';
 import 'logic/common/platform_specific.dart' if (dart.library.html) 'logic/common/platform_specific_web.dart';
 import 'logic/data/experience_data.dart';
+import 'ui/screens/projects/project_details/project_details_screen.dart';
 import 'ui/screens/projects/projects_carousel/projects_carousel_screen.dart';
 import 'ui/screens/experiences/experiences_screen.dart';
 import 'ui/screens/intro/intro_screen.dart';
@@ -20,7 +21,8 @@ class ScreenPaths {
   static String video(String id) => '/video/$id';
   static String highlights(WonderType type) => '/highlights/${type.name}';
   static String search(WonderType type) => '/search/${type.name}';
-  static String project(String id) => '/project/$id';
+  static String projectRoot = '/project/';
+  static String project(String id) => '${ScreenPaths.projectRoot}$id';
   static String collection(String id) => '/collection?id=$id';
   // static String maps(WonderType type) => '/maps/${type.name}';
   static String timeline(WonderType? type) => '/timeline?type=${type?.name ?? ''}';
@@ -35,7 +37,7 @@ Map<String, String> getScreenTitles = {
 };
 
 class ScreenUtility {
-  static Widget screenForPath(String path, {ExperienceType type = ExperienceType.softwareDeveloper}) {
+  static Widget screenForPath(String path, {ExperienceType type = ExperienceType.softwareDeveloper, String? id}) {
     if (path == ScreenPaths.splash) {
       return Container(color: $styles.colors.greyStrong);
     } else if (path == ScreenPaths.intro) {
@@ -46,6 +48,10 @@ class ScreenUtility {
       return ExperienceDetailScreen(_parseExperienceType(path));
     } else if (path == ScreenPaths.projects) {
       return const ProjectsCarouselScreen();
+    } else if (path.startsWith(ScreenPaths.projectRoot) && id != null) {
+      return ProjectDetailsScreen(
+        projectId: id,
+      );
     } else {
       throw Exception('Invalid path: $path');
     }
@@ -89,6 +95,16 @@ final appRouter = GoRouter(
                   _parseExperienceType(type),
                   // tabIndex: tabIndex,
                 )),
+              );
+            },
+          ),
+          GoRoute(
+            path: '/project/:id',
+            pageBuilder: (_, state) {
+              final id = state.pathParameters['id'];
+
+              return MaterialPage(
+                child: ScreenUtility.screenForPath(ScreenPaths.project(id!), id: id),
               );
             },
           ),

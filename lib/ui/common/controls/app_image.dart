@@ -15,6 +15,7 @@ class AppImage extends StatefulWidget {
     this.progress = false,
     this.color,
     this.scale,
+    this.borderRadius,
   }) : super(key: key);
 
   final ImageProvider? image;
@@ -26,6 +27,7 @@ class AppImage extends StatefulWidget {
   final bool progress;
   final Color? color;
   final double? scale;
+  final BorderRadius? borderRadius;
 
   @override
   State<AppImage> createState() => _AppImageState();
@@ -55,28 +57,31 @@ class _AppImageState extends State<AppImage> {
 
   @override
   Widget build(BuildContext context) {
-    return ImageFade(
-      image: _displayImage,
-      fit: widget.fit,
-      alignment: widget.alignment,
-      duration: widget.duration ?? $styles.times.fast,
-      syncDuration: widget.syncDuration ?? 0.ms,
-      loadingBuilder: (_, value, ___) {
-        if (!widget.distractor && !widget.progress) return const SizedBox();
-        return Center(child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color));
-      },
-      errorBuilder: (_, __) => Container(
-        padding: EdgeInsets.all($styles.insets.xs),
-        alignment: Alignment.center,
-        child: LayoutBuilder(builder: (_, constraints) {
-          double size = min(constraints.biggest.width, constraints.biggest.height);
-          if (size < 16) return const SizedBox();
-          return Icon(
-            Icons.image_not_supported_outlined,
-            color: $styles.colors.white.withOpacity(0.1),
-            size: min(size, $styles.insets.lg),
-          );
-        }),
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.zero,
+      child: ImageFade(
+        image: _displayImage,
+        fit: widget.fit,
+        alignment: widget.alignment,
+        duration: widget.duration ?? $styles.times.fast,
+        syncDuration: widget.syncDuration ?? 0.ms,
+        loadingBuilder: (_, value, ___) {
+          if (!widget.distractor && !widget.progress) return const SizedBox();
+          return Center(child: AppLoadingIndicator(value: widget.progress ? value : null, color: widget.color));
+        },
+        errorBuilder: (_, __) => Container(
+          padding: EdgeInsets.all($styles.insets.xs),
+          alignment: Alignment.center,
+          child: LayoutBuilder(builder: (_, constraints) {
+            double size = min(constraints.biggest.width, constraints.biggest.height);
+            if (size < 16) return const SizedBox();
+            return Icon(
+              Icons.image_not_supported_outlined,
+              color: $styles.colors.white.withOpacity(0.1),
+              size: min(size, $styles.insets.lg),
+            );
+          }),
+        ),
       ),
     );
   }

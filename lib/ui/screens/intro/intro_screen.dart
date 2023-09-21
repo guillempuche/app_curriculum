@@ -1,9 +1,4 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../../common_libs.dart';
-import '../../../logic/common/platform_info.dart';
-import '../../common/app_icons.dart';
 import '../../common/controls/app_page_indicator.dart';
 import '../../common/gradient_container.dart';
 import '../../common/static_text_scale.dart';
@@ -18,8 +13,7 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  static const double _imageSize = 250;
-  // static const double _logoHeight = 126;
+  static const double _imageSize = 300;
   static const double _textHeight = 120;
   static const double _pageIndicatorHeight = 55;
 
@@ -30,21 +24,16 @@ class _IntroScreenState extends State<IntroScreen> {
   bool get _isOnLastPage => _currentPage.value.round() == pageData.length - 1;
 
   @override
-  void initState() {
-    super.initState();
-
-    // Fetch data
-    experiencesLogic.init();
-    projectsLogic.init();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // Set the page data, as strings may have changed based on locale
     pageData = [
-      _PageData($strings.introMyself, $strings.introDescriptionNavigate, 'camel', '1'),
-      _PageData($strings.introTitleExplore, $strings.introDescriptionUncover, 'petra', '2'),
-      _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'statue', '3'),
+      const _PageData(
+          'Hi, I\'m Guillem Puche',
+          'Purpose-driven and service-minded entrepreneurship, first principles, customer-focused, and ego-free.',
+          'silhouette.png',
+          '1'),
+      _PageData($strings.introTitleExplore, $strings.introDescriptionUncover, 'mobile.png', '2'),
+      _PageData($strings.introTitleDiscover, $strings.introDescriptionLearn, 'mobile-filled.png', '3'),
     ];
 
     // This view uses a full screen PageView to enable swipe navigation.
@@ -66,7 +55,7 @@ class _IntroScreenState extends State<IntroScreen> {
               effects: const [FadeEffect()],
               child: Stack(
                 children: [
-                  // page view with title & description:
+                  // page view with title & description
                   MergeSemantics(
                     child: Semantics(
                       onIncrease: () => _handleSemanticSwipe(1),
@@ -84,10 +73,9 @@ class _IntroScreenState extends State<IntroScreen> {
                     child: Column(children: [
                       const Spacer(),
 
-                      // masked image:
+                      // image
                       SizedBox(
                         height: _imageSize,
-                        width: _imageSize,
                         child: ValueListenableBuilder<int>(
                           valueListenable: _currentPage,
                           builder: (_, value, __) {
@@ -95,14 +83,20 @@ class _IntroScreenState extends State<IntroScreen> {
                               duration: $styles.times.slow,
                               child: KeyedSubtree(
                                 key: ValueKey(value), // so AnimatedSwitcher sees it as a different child.
-                                child: _PageImage(data: pageData[value]),
+                                child: SizedBox.expand(
+                                  child: Image.asset(
+                                    '${ImagePaths.common}/${pageData[value].img}',
+                                    fit: BoxFit.fitHeight,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
                               ),
                             );
                           },
                         ),
                       ),
 
-                      // placeholder gap for text:
+                      // placeholder gap for text
                       const Gap(_IntroScreenState._textHeight),
 
                       // page indicator:
@@ -202,7 +196,12 @@ class _IntroScreenState extends State<IntroScreen> {
 
 @immutable
 class _PageData {
-  const _PageData(this.title, this.desc, this.img, this.mask);
+  const _PageData(
+    this.title,
+    this.desc,
+    this.img,
+    this.mask,
+  );
 
   final String title;
   final String desc;
@@ -242,32 +241,6 @@ class _Page extends StatelessWidget {
           const Spacer(flex: 2),
         ]),
       ),
-    );
-  }
-}
-
-class _PageImage extends StatelessWidget {
-  const _PageImage({Key? key, required this.data}) : super(key: key);
-
-  final _PageData data;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox.expand(
-          child: Image.asset(
-            '${ImagePaths.common}/intro-${data.img}.jpg',
-            fit: BoxFit.cover,
-            alignment: Alignment.centerRight,
-          ),
-        ),
-        Positioned.fill(
-            child: Image.asset(
-          '${ImagePaths.common}/intro-mask-${data.mask}.png',
-          fit: BoxFit.fill,
-        )),
-      ],
     );
   }
 }
