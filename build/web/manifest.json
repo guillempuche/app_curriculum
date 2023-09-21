@@ -1,0 +1,18 @@
+{
+    "name": "Guillem Curriculum",
+    "short_name": "Guillem Curriculum",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#E4935D",
+    "description": "Guillem's curriculum vitae",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/icon-rounded-205.png",
+            "sizes": "205x205",
+            "type": "image/png"
+        }
+    ]
+}
