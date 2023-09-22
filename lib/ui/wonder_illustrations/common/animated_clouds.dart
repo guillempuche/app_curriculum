@@ -9,10 +9,14 @@ import '../../common/utils/context_utils.dart';
 // When value-key is changed, a new set of clouds will animate into place and the old ones will animate out.
 // Uses a random seed system, to make sure we get the same set of clouds for each wonder, without actually having to hand-position them.
 class AnimatedClouds extends StatefulWidget with GetItStatefulWidgetMixin {
-  AnimatedClouds(
-      {Key? key, this.enableAnimations = true, required this.wonderType, required this.opacity, this.cloudSize = 500})
-      : super(key: key);
-  final ExperienceType wonderType;
+  AnimatedClouds({
+    Key? key,
+    this.enableAnimations = true,
+    required this.experienceType,
+    required this.opacity,
+    this.cloudSize = 500,
+  }) : super(key: key);
+  final ExperienceType experienceType;
   final bool enableAnimations;
   final double opacity;
   final double cloudSize;
@@ -42,7 +46,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
 
   @override
   void didUpdateWidget(covariant AnimatedClouds oldWidget) {
-    if (oldWidget.wonderType != widget.wonderType) {
+    if (oldWidget.experienceType != widget.experienceType) {
       _oldClouds = _clouds;
       _clouds = _getClouds();
       _showClouds();
@@ -94,7 +98,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
               // A stack with 2 sets of clouds, one set is moving out of view while the other moves in.
               return Stack(
                 clipBehavior: Clip.hardEdge,
-                key: ValueKey(widget.wonderType),
+                key: ValueKey(widget.experienceType),
                 children: [
                   if (_anim.value != 1) ...[
                     ..._oldClouds.map((c) => buildCloud(c, isOld: true, startOffset: 1000)),
@@ -111,7 +115,7 @@ class _AnimatedCloudsState extends State<AnimatedClouds> with SingleTickerProvid
 
   List<_Cloud> _getClouds() {
     Size size = ContextUtils.getSize(context) ?? Size(context.widthPx, 400);
-    rndSeed = _getCloudSeed(widget.wonderType);
+    rndSeed = _getCloudSeed(widget.experienceType);
     return List<_Cloud>.generate(3, (index) {
       return _Cloud(
         Offset(rnd.getDouble(-200, size.width - 100), rnd.getDouble(50, size.height - 50)),

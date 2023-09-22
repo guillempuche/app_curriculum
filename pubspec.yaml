@@ -80,7 +80,6 @@ flutter:
     - assets/images/marketing/
     - assets/images/chatbot/
     - assets/images/others/
-    - .env
 
   fonts:
     - family: Cinzel

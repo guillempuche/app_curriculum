@@ -187,7 +187,7 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
       FractionallySizedBox(
         widthFactor: 1,
         heightFactor: .5,
-        child: AnimatedClouds(wonderType: currentExperience.type, opacity: 1),
+        child: AnimatedClouds(experienceType: currentExperience.type, opacity: 1),
       )
     ];
   }

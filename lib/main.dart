@@ -9,12 +9,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'common_libs.dart';
 import 'firebase_options.dart';
 import 'logic/projects_logic.dart';
-import 'logic/collectibles_logic.dart';
 import 'logic/experiences_logic.dart';
 import 'logic/locale_logic.dart';
-import 'logic/timeline_logic.dart';
 import 'logic/unsplash_logic.dart';
-import 'logic/wallpaper_logic.dart';
 import 'logic/wonders_logic.dart';
 
 void main() async {
@@ -146,14 +143,10 @@ void registerSingletons() {
   GetIt.I.registerLazySingleton<ProjectsLogic>(() => ProjectsLogic());
   // Wonders
   GetIt.I.registerLazySingleton<WondersLogic>(() => WondersLogic());
-  // Timeline / Events
-  GetIt.I.registerLazySingleton<TimelineLogic>(() => TimelineLogic());
   // Settings
   GetIt.I.registerLazySingleton<SettingsLogic>(() => SettingsLogic());
   // Unsplash
   GetIt.I.registerLazySingleton<UnsplashLogic>(() => UnsplashLogic());
-  // Collectibles
-  GetIt.I.registerLazySingleton<CollectiblesLogic>(() => CollectiblesLogic());
   // Localizations
   GetIt.I.registerLazySingleton<LocaleLogic>(() => LocaleLogic());
 }
@@ -164,11 +157,8 @@ AppLogic get appLogic => GetIt.I.get<AppLogic>();
 ExperiencesLogic get experiencesLogic => GetIt.I.get<ExperiencesLogic>();
 ProjectsLogic get projectsLogic => GetIt.I.get<ProjectsLogic>();
 WondersLogic get wondersLogic => GetIt.I.get<WondersLogic>();
-TimelineLogic get timelineLogic => GetIt.I.get<TimelineLogic>();
 SettingsLogic get settingsLogic => GetIt.I.get<SettingsLogic>();
 UnsplashLogic get unsplashLogic => GetIt.I.get<UnsplashLogic>();
-CollectiblesLogic get collectiblesLogic => GetIt.I.get<CollectiblesLogic>();
-WallPaperLogic get wallpaperLogic => GetIt.I.get<WallPaperLogic>();
 LocaleLogic get localeLogic => GetIt.I.get<LocaleLogic>();
 
 /// Global helpers for readability

@@ -1,5 +1,4 @@
 import '../common_libs.dart';
-import './common/platform_info.dart';
 import './common/save_load_mixin.dart';
 
 class SettingsLogic with ThrottledSaveLoadMixin {
@@ -37,6 +36,5 @@ class SettingsLogic with ThrottledSaveLoadMixin {
     await localeLogic.loadIfChanged(value);
     // Re-init controllers that have some cached data that is localized
     wondersLogic.init();
-    timelineLogic.init();
   }
 }
