@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -118,6 +120,8 @@ class LinkElementBuilder extends MarkdownElementBuilder {
       borderRadius: BorderRadius.circular(16),
       child: AnyLinkPreview(
         link: link,
+        // Using proxy CORS to avoid in Flutter web browsers CORS.
+        proxyUrl: 'https://proxy-for-browser-cors.guillempuche.workers.dev/?proxyUrl=',
         urlLaunchMode: LaunchMode.externalApplication,
         showMultimedia: true,
         displayDirection: UIDirection.uiDirectionHorizontal,
@@ -126,7 +130,7 @@ class LinkElementBuilder extends MarkdownElementBuilder {
         backgroundColor: $styles.colors.offWhite.withOpacity(0.1),
         bodyTextOverflow: TextOverflow.ellipsis,
         bodyMaxLines: 5,
-        removeElevation: false,
+        removeElevation: true,
         borderRadius: 15,
       ),
     );
