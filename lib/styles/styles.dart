@@ -72,7 +72,7 @@ class _Text {
     'zh': const TextStyle(fontFamily: 'MaShanZheng'),
   };
 
-  final Map<String, TextStyle> _wonderTitleFonts = {
+  final Map<String, TextStyle> _experienceTitleFonts = {
     'en': const TextStyle(fontFamily: 'Yeseva'),
   };
 
@@ -92,13 +92,13 @@ class _Text {
 
   TextStyle get titleFont => _getFontForLocale(_titleFonts);
   TextStyle get quoteFont => _getFontForLocale(_quoteFonts);
-  TextStyle get wonderTitleFont => _getFontForLocale(_wonderTitleFonts);
+  TextStyle get experienceTitleFont => _getFontForLocale(_experienceTitleFonts);
   TextStyle get contentFont => _getFontForLocale(_contentFonts);
   TextStyle get monoTitleFont => _getFontForLocale(_monoTitleFonts);
 
   late final TextStyle dropCase = _createFont(quoteFont, sizePx: 56, heightPx: 20);
 
-  late final TextStyle wonderTitle = _createFont(wonderTitleFont, sizePx: 64, heightPx: 56);
+  late final TextStyle experienceTitle = _createFont(experienceTitleFont, sizePx: 45, heightPx: 50);
 
   late final TextStyle h1 = _createFont(titleFont, sizePx: 64, heightPx: 62);
   late final TextStyle h2 = _createFont(titleFont, sizePx: 32, heightPx: 46);

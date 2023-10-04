@@ -22,14 +22,17 @@ class VerticalSwipeNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onVerticalDragEnd: (details) {
-        // When velocity is negative, means swipe goes from top to bottom.
-        if (forwardDirection != null && goForwardPath != null && details.primaryVelocity! < 0) {
-          context.go(goForwardPath!, extra: forwardDirection!);
-        } else if (backDirection != null && goBackPath != null && details.primaryVelocity! > 0) {
-          context.go(goBackPath!, extra: backDirection!);
-        }
-      },
+      // Disable swipe navigation when it's on web and medium and large screen (not mobile browsers).
+      onVerticalDragEnd: !PlatformInfo.isSwipeEnabled(context)
+          ? null
+          : (details) {
+              // When velocity is negative, means swipe goes from top to bottom.
+              if (forwardDirection != null && goForwardPath != null && details.primaryVelocity! < 0) {
+                context.go(goForwardPath!, extra: forwardDirection!);
+              } else if (backDirection != null && goBackPath != null && details.primaryVelocity! > 0) {
+                context.go(goBackPath!, extra: backDirection!);
+              }
+            },
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -38,8 +41,8 @@ class VerticalSwipeNavigator extends StatelessWidget {
             Positioned(
               top: 20,
               child: _AnimatedArrowButton(
-                //semanticTitle: currentWonder.title,
                 direction: _ButtonDirection.top,
+                isSwipeText: PlatformInfo.isSwipeEnabled(context),
                 onTap: () => context.go(goBackPath!, extra: backDirection!),
               ),
             ),
@@ -48,6 +51,7 @@ class VerticalSwipeNavigator extends StatelessWidget {
               bottom: 20,
               child: _AnimatedArrowButton(
                 direction: _ButtonDirection.bottom,
+                isSwipeText: PlatformInfo.isSwipeEnabled(context),
                 onTap: () => context.go(goForwardPath!, extra: forwardDirection!),
               ),
             ),

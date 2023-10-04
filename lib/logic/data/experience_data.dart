@@ -16,7 +16,6 @@ class ExperienceData extends Equatable {
     required this.type,
     required this.title,
     required this.languages,
-    required this.image,
     required this.text,
     this.endDate,
     this.startDate,
@@ -27,7 +26,6 @@ class ExperienceData extends Equatable {
   final ExperienceType type;
   final String title;
   final List<Locale> languages;
-  final String image;
   final String text;
   final DateTime? startDate;
   final DateTime? endDate;
@@ -39,7 +37,6 @@ class ExperienceData extends Equatable {
         type,
         title,
         languages,
-        image,
         text,
         startDate,
         endDate,

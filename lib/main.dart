@@ -50,7 +50,7 @@ void main() async {
       //
       // Temporarily toggle this to true if you want to test crash reporting in
       // your app.
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+      if (!PlatformInfo.isWeb) await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
 
       if (kReleaseMode && !PlatformInfo.isWeb) {
         await FirebaseCrashlytics.instance.recordError(
@@ -84,7 +84,7 @@ void main() async {
     // Debug and rest of profile modes.
     else {
       // Log the error on the IDE's console.
-      FlutterError.presentError(FlutterErrorDetails(exception: error, stack: stack));
+      FlutterError.presentError(FlutterErrorDetails(exception: error));
     }
   });
 }
@@ -123,7 +123,9 @@ class App extends StatelessWidget with GetItMixin {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(color: $styles.colors.accent1),
+          );
         });
   }
 

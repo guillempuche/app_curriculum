@@ -11,11 +11,13 @@ class _AnimatedArrowButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     this.direction = _ButtonDirection.top,
+    this.isSwipeText = true,
     this.semanticTitle,
   }) : super(key: key);
 
   final VoidCallback onTap;
   final _ButtonDirection direction;
+  final bool isSwipeText;
   final String? semanticTitle;
 
   @override
@@ -35,12 +37,14 @@ class _AnimatedArrowButton extends StatelessWidget {
                 child: Icon(
                   Icons.chevron_right,
                   size: 42,
-                  color: $styles.colors.white,
+                  color: $styles.colors.accent1,
                 ),
               ),
               Text(
-                direction == _ButtonDirection.top ? 'Swipe down' : 'Swipe up',
-                style: TextStyle(color: $styles.colors.white),
+                direction == _ButtonDirection.top
+                    ? (isSwipeText ? 'Swipe down' : 'Click for previous section')
+                    : (isSwipeText ? 'Swipe up' : 'Click for next section'),
+                style: TextStyle(color: $styles.colors.accent1),
               ),
             ],
           ),

@@ -6,13 +6,11 @@ class _BottomTextContent extends StatelessWidget {
     required this.project,
     required this.height,
     required this.state,
-    required this.shortMode,
   }) : super(key: key);
 
   final ProjectData project;
   final double height;
   final _ProjectsCarouselScreenState state;
-  final bool shortMode;
 
   int get _currentPage => state._currentPage.value.round();
 
@@ -32,12 +30,15 @@ class _BottomTextContent extends StatelessWidget {
               Gap($styles.insets.md),
               Column(
                 children: [
-                  if (!shortMode)
-                    AppPageIndicator(
+                  PageNavButtons(
+                    child: AppPageIndicator(
                       count: state._projects.length,
                       controller: state._pageController!,
                       semanticPageTitle: $strings.projectSemanticProject,
                     ),
+                    onStartButtonPressed: () => state._handleProjectTap(_currentPage - 1),
+                    onEndButtonPressed: () => state._handleProjectTap(_currentPage + 1),
+                  ),
                   Gap($styles.insets.sm),
                   IgnorePointer(
                     ignoringSemantics: false,
@@ -72,14 +73,6 @@ class _BottomTextContent extends StatelessWidget {
                             ),
                             onPressed: () => state._handleProjectTap(_currentPage),
                           )
-                          // if (!shortMode) ...[
-                          //   Gap($styles.insets.xxs),
-                          //   Text(
-                          //     project.date.isEmpty ? '--' : project.date,
-                          //     style: $styles.text.body,
-                          //     textAlign: TextAlign.center,
-                          //   ),
-                          // ]
                         ],
                       ).animate(key: ValueKey(project.id)).fadeIn(),
                     ),

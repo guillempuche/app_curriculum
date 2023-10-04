@@ -1,4 +1,4 @@
-import 'package:guillem_curriculum/ui/wonder_illustrations/common/experience_illustration_builder.dart';
+import 'package:guillem_curriculum/ui/experience_illustrations/common/experience_illustration_builder.dart';
 
 import '../../common_libs.dart';
 import '../common/fade_color_transition.dart';

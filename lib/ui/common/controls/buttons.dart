@@ -47,11 +47,11 @@ class AppBtn extends StatelessWidget {
     if (semanticLabel == null && text == null) throw ('AppBtn.from must include either text or semanticLabel');
     this.semanticLabel = semanticLabel ?? text ?? '';
     _builder = (context) {
-      if (text == null && icon == null) return SizedBox.shrink();
+      if (text == null && icon == null) return const SizedBox.shrink();
       Text? txt = text == null
           ? null
           : Text(text.toUpperCase(),
-              style: $styles.text.btn, textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false));
+              style: $styles.text.btn, textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false));
       Widget? icn = icon == null ? null : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
       if (txt != null && icn != null) {
         return Row(
@@ -110,7 +110,7 @@ class AppBtn extends StatelessWidget {
     Color textColor = isSecondary ? $styles.colors.black : $styles.colors.white;
     BorderSide side = border ?? BorderSide.none;
 
-    Widget content = _builder?.call(context) ?? child ?? SizedBox.shrink();
+    Widget content = _builder?.call(context) ?? child ?? const SizedBox.shrink();
     if (expand) content = Center(child: content);
 
     OutlinedBorder shape = circular
@@ -213,5 +213,207 @@ class _CustomFocusBuilderState extends State<_CustomFocusBuilder> {
   @override
   Widget build(BuildContext context) {
     return widget.builder.call(context, _focusNode);
+  }
+}
+
+class PageNavButtons extends StatefulWidget {
+  const PageNavButtons({
+    required this.onStartButtonPressed,
+    required this.onEndButtonPressed,
+    this.child,
+    this.showStartButton = true,
+    this.showEndButton = true,
+    this.color,
+    Key? key,
+  }) : super(key: key);
+
+  final bool showStartButton;
+  final bool showEndButton;
+  // Widget is position between the navigation buttons.
+  final Widget? child;
+  final VoidCallback onStartButtonPressed;
+  final VoidCallback onEndButtonPressed;
+  final Color? color;
+
+  @override
+  State<PageNavButtons> createState() => _PageNavButtonsState();
+}
+
+class _PageNavButtonsState extends State<PageNavButtons> with TickerProviderStateMixin {
+  late final AnimationController _buttonStartController;
+  late final AnimationController _buttonEndController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _buttonStartController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    _buttonEndController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    _setButtonAnimations();
+  }
+
+  @override
+  void didUpdateWidget(PageNavButtons oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _setButtonAnimations();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FadeTransition(
+            opacity: _buttonStartController,
+            child: IgnorePointer(
+              ignoring: !widget.showStartButton,
+              child: Tooltip(
+                message: 'Click to go to the previous element',
+                child: CircleIconBtn(
+                  icon: Icons.chevron_left,
+                  bgColor: widget.color ?? $styles.colors.accent1,
+                  onPressed: widget.onStartButtonPressed,
+                ),
+              ),
+            ),
+          ),
+          if (widget.child != null)
+            Padding(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: $styles.insets.xxs),
+              child: Container(child: widget.child),
+            )
+          else
+            Gap($styles.insets.md),
+          FadeTransition(
+            opacity: _buttonEndController,
+            child: IgnorePointer(
+              ignoring: !widget.showEndButton,
+              child: Tooltip(
+                message: 'Click to go to the next element',
+                child: CircleIconBtn(
+                  icon: Icons.chevron_right,
+                  bgColor: widget.color ?? $styles.colors.accent1,
+                  onPressed: widget.onEndButtonPressed,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _buttonStartController.dispose();
+    _buttonEndController.dispose();
+    super.dispose();
+  }
+
+  void _setButtonAnimations() {
+    if (widget.showStartButton) {
+      _buttonStartController.forward();
+    } else {
+      _buttonStartController.reverse();
+    }
+
+    if (widget.showEndButton) {
+      _buttonEndController.forward();
+    } else {
+      _buttonEndController.reverse();
+    }
+  }
+}
+
+class CircleIconBtn extends StatelessWidget {
+  const CircleIconBtn({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    // this.border,
+    this.bgColor,
+    this.color,
+    this.size,
+    this.iconSize,
+    this.semanticLabel,
+  }) : super(key: key);
+
+  static double defaultSize = 28;
+
+  final IconData icon;
+  final VoidCallback onPressed;
+  // final BorderSide? border;
+  final Color? bgColor;
+  final Color? color;
+  final String? semanticLabel;
+  final double? size;
+  final double? iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    Color defaultColor = $styles.colors.greyStrong;
+
+    return IconButton(
+      icon: Icon(icon),
+      color: bgColor ?? defaultColor,
+      iconSize: size,
+      onPressed: onPressed,
+    );
+  }
+}
+
+class BackBtn extends StatelessWidget {
+  const BackBtn({
+    Key? key,
+    // this.icon = AppIcons.prev,
+    this.icon = Icons.arrow_back,
+    this.onPressed,
+    this.semanticLabel,
+    this.bgColor,
+    this.iconColor,
+  }) : super(key: key);
+
+  final Color? bgColor;
+  final Color? iconColor;
+  // final AppIcons icon;
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final String? semanticLabel;
+
+  BackBtn.close({Key? key, VoidCallback? onPressed, Color? bgColor, Color? iconColor})
+      : this(
+            key: key,
+            // icon: AppIcons.close,
+            icon: Icons.close,
+            onPressed: onPressed,
+            semanticLabel: $strings.circleButtonsSemanticClose,
+            bgColor: bgColor,
+            iconColor: iconColor);
+
+  @override
+  Widget build(BuildContext context) {
+    double size = 48;
+    return AppBtn(
+      onPressed: onPressed ?? () => Navigator.pop(context),
+      semanticLabel: semanticLabel,
+      minimumSize: Size(size, size),
+      padding: EdgeInsets.zero,
+      circular: true,
+      bgColor: bgColor,
+      child: Icon(
+        icon,
+        color: iconColor ?? $styles.colors.white,
+      ),
+    );
   }
 }

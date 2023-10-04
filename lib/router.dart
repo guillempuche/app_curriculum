@@ -1,7 +1,6 @@
 import '../ui/screens/experiences/experience_detail/experience_detail_screen.dart';
 import 'common_libs.dart';
 import 'logic/common/platform_specific.dart' if (dart.library.html) 'logic/common/platform_specific_web.dart';
-import 'logic/data/experience_data.dart';
 import 'ui/screens/projects/project_details/project_details_screen.dart';
 import 'ui/screens/projects/projects_carousel/projects_carousel_screen.dart';
 import 'ui/screens/experiences/experiences_screen.dart';
@@ -49,9 +48,7 @@ class ScreenUtility {
     } else if (path == ScreenPaths.projects) {
       return const ProjectsCarouselScreen();
     } else if (path.startsWith(ScreenPaths.projectRoot) && id != null) {
-      return ProjectDetailsScreen(
-        projectId: id,
-      );
+      return ProjectDetailsScreen(projectId: id);
     } else {
       throw Exception('Invalid path: $path');
     }
@@ -86,31 +83,12 @@ final appRouter = GoRouter(
           ),
           GoRoute(
             path: '/experience/:type',
-            pageBuilder: (context, state) {
-              final type = state.pathParameters['type'];
-              // final tabIndex = int.tryParse(state.uri.queryParameters['tabIndex'] ?? '') ?? 0;
-
-              return MaterialPage(
-                child: ScreenUtility.screenForPath(ScreenPaths.experienceDetails(
-                  _parseExperienceType(type),
-                  // tabIndex: tabIndex,
-                )),
-              );
-            },
+            pageBuilder: pageBuilder,
           ),
           GoRoute(
             path: '/project/:id',
-            pageBuilder: (_, state) {
-              final id = state.pathParameters['id'];
-
-              return MaterialPage(
-                child: ScreenUtility.screenForPath(ScreenPaths.project(id!), id: id),
-              );
-            },
+            pageBuilder: pageBuilder,
           ),
-          // AppRoute('/project/:id', (s) {
-          //   return ProjectDetailsScreen(projectId: s.pathParameters['id']!);
-          // }),
         ]),
   ],
 );
@@ -126,9 +104,13 @@ Page<dynamic> pageBuilder(
       PlatformSpecificImpl.setPageTitle(title);
     }
   }
+
+  final type = state.pathParameters['type'];
+  final id = state.pathParameters['id'];
+
   return GoRouterTransitionPage.verticalAxis(
     direction: state.extra is TransitionDirection ? state.extra as TransitionDirection : null,
-    child: ScreenUtility.screenForPath(state.path!),
+    child: Material(child: ScreenUtility.screenForPath(state.path!, type: _parseExperienceType(type), id: id)),
   );
 }
 

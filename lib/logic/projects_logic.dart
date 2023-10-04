@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../common_libs.dart';
-import 'data/project_data.dart';
 
 class ProjectsLogic {
   List<ProjectData> all = [];

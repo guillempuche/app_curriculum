@@ -17,16 +17,17 @@ class _TitleText extends StatelessWidget {
               width: $styles.sizes.maxContentWidth1,
               child: Column(
                 children: [
-                  Gap($styles.insets.xxl),
+                  Gap($styles.insets.xl),
 
-                  /// Wonder title text
+                  /// Experience title text
                   Semantics(
-                    sortKey: OrdinalSortKey(0),
+                    sortKey: const OrdinalSortKey(0),
                     child: AnimatedBuilder(
                         animation: scroller,
                         builder: (_, __) {
                           final yPos = ContextUtils.getGlobalPos(context)?.dy ?? 0;
                           bool enableHero = yPos > -100;
+
                           return ExperienceTitleText(data, enableHero: enableHero);
                         }),
                   ),
@@ -39,23 +40,31 @@ class _TitleText extends StatelessWidget {
                   // ),
                   Gap($styles.insets.md),
 
-                  /// Duration
+                  /// Duration & dates
                   if (data.startDate != null)
                     Text(
-                      StringUtils.getDuration(data.startDate!, data.endDate),
+                      '${StringUtils.getDuration(data.startDate!, data.endDate)} - ${$strings.titleLabelDate(StringUtils.formatYrMth(data.startDate), StringUtils.formatYrMth(data.endDate))}',
                       style: $styles.text.body,
                       textAlign: TextAlign.center,
                     ),
-                  Gap($styles.insets.sm),
+                  Gap($styles.insets.xs),
 
-                  /// Date
+                  /// Location
+                  if (data.location != null)
+                    Text(
+                      data.location!,
+                      style: $styles.text.body,
+                      textAlign: TextAlign.center,
+                    ),
+                  Gap($styles.insets.xs),
+
+                  /// Languages
                   Text(
-                    $strings.titleLabelDate(
-                        StringUtils.formatYrMth(data.startDate), StringUtils.formatYrMth(data.endDate)),
+                    'In ${data.languages.map((locale) => StringUtils.getLanguage(locale)).join(', ')}',
                     style: $styles.text.body,
                     textAlign: TextAlign.center,
                   ),
-                  Gap($styles.insets.sm),
+                  Gap($styles.insets.md),
 
                   /// Compass divider
                   ExcludeSemantics(
@@ -65,7 +74,6 @@ class _TitleText extends StatelessWidget {
                         animation: scroller,
                         builder: (_, __) => CompassDivider(
                           isExpanded: scroller.position.pixels <= 0,
-                          // linesColor: data.type.fgColor,
                           linesColor: $styles.colors.offWhite,
                           compassColor: $styles.colors.offWhite,
                         ),
@@ -73,7 +81,7 @@ class _TitleText extends StatelessWidget {
                     ),
                   ),
 
-                  Gap($styles.insets.sm),
+                  Gap($styles.insets.md),
                 ],
               ),
             ),

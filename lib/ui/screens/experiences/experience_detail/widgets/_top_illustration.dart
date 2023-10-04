@@ -13,13 +13,20 @@ class _TopIllustration extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        ExperienceIllustration(type, config: WonderIllustrationConfig.bg(enableAnims: false, shortMode: true)),
+        ExperienceIllustration(type,
+            config: WonderIllustrationConfig.bg(
+              enableAnims: false,
+              shortMode: true,
+            )),
         Transform.translate(
           // Small bump down to make sure we cover the edge between the editorial page and the sky.
-          offset: fgOffset + Offset(0, 10),
+          offset: fgOffset + const Offset(0, 25),
           child: ExperienceIllustration(
             type,
-            config: WonderIllustrationConfig.mg(enableAnims: false, shortMode: true),
+            config: WonderIllustrationConfig.mg(
+              enableAnims: false,
+              shortMode: true,
+            ),
           ),
         ),
       ],

@@ -5,19 +5,16 @@ import 'package:guillem_curriculum/ui/common/markdown_renderer.dart';
 
 import '../../../../../common_libs.dart';
 import '../../../../logic/common/string_utils.dart';
-import '../../../common/app_icons.dart';
 import '../../../common/compass_divider.dart';
 import '../../../common/controls/app_header.dart';
 import '../../../common/pop_router_on_over_scroll.dart';
-import '../../../common/scaling_list_item.dart';
 import '../../../common/static_text_scale.dart';
 import '../../../common/themed_text.dart';
 import '../../../common/utils/context_utils.dart';
-import '../../../wonder_illustrations/common/experience_illustration.dart';
-import '../../../wonder_illustrations/common/wonder_illustration_config.dart';
-import '../../../wonder_illustrations/common/experience_title_text.dart';
+import '../../../experience_illustrations/common/experience_illustration.dart';
+import '../../../experience_illustrations/common/wonder_illustration_config.dart';
+import '../../../experience_illustrations/common/experience_title_text.dart';
 
-part 'widgets/_app_bar.dart';
 part 'widgets/_callout.dart';
 part 'widgets/_section_divider.dart';
 part 'widgets/_title_text.dart';
@@ -51,10 +48,6 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
     return LayoutBuilder(builder: (_, constraints) {
       bool shortMode = constraints.biggest.height < 700;
       double illustrationHeight = shortMode ? 250 : 280;
-      double minAppBarHeight = shortMode ? 80 : 150;
-
-      /// Attempt to maintain a similar aspect ratio for the image within the app-bar
-      double maxAppBarHeight = min(context.widthPx, $styles.sizes.maxContentWidth1) * 1.2;
 
       return PopRouterOnOverScroll(
         controller: _scroller,
@@ -64,7 +57,6 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
             children: [
               /// Background
               Positioned.fill(
-                // child: ColoredBox(color: widget.data.type.bgColor),
                 child: ColoredBox(color: $styles.colors.black),
               ),
 
@@ -75,7 +67,7 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                   valueListenable: _scrollPos,
                   builder: (_, value, child) {
                     // get some value between 0 and 1, based on the amt scrolled
-                    double opacity = (1 - value / 500).clamp(0, 1);
+                    double opacity = (1 - value / 300).clamp(0, 1);
                     return Opacity(opacity: opacity, child: child);
                   },
                   // This is due to a bug: https://github.com/flutter/flutter/issues/101872
@@ -109,7 +101,7 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                             child: ValueListenableBuilder<double>(
                               valueListenable: _scrollPos,
                               builder: (_, value, child) {
-                                double offsetAmt = max(0, value * .3);
+                                double offsetAmt = max(0, value * .4);
                                 double opacity = (1 - offsetAmt / 150).clamp(0, 1);
 
                                 return Transform.translate(
@@ -120,27 +112,6 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                               child: _TitleText(experience, scroller: _scroller),
                             ),
                           ),
-
-                          // /// Collapsing App bar, pins to the top of the list
-                          // SliverAppBar(
-                          //   pinned: true,
-                          //   collapsedHeight: minAppBarHeight,
-                          //   // collapsedHeight: 20,
-                          //   toolbarHeight: minAppBarHeight,
-                          //   // toolbarHeight: 20,
-                          //   // expandedHeight: maxAppBarHeight,
-                          //   expandedHeight: 100,
-                          //   backgroundColor: Colors.transparent,
-                          //   elevation: 0,
-                          //   leading: const SizedBox.shrink(),
-                          //   flexibleSpace: SizedBox.expand(
-                          //     child: _AppBar(
-                          //       experience,
-                          //       scrollPos: _scrollPos,
-                          //       // sectionIndex: _sectionIndex,
-                          //     ),
-                          //   ),
-                          // ),
 
                           SliverToBoxAdapter(
                             child: Center(
@@ -156,101 +127,6 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                               ),
                             ),
                           ),
-
-                          /// Experience content (text and images)
-                          // _ScrollingContent(widget.data, scrollPos: _scrollPos, sectionNotifier: _sectionIndex),
-                          // SliverBackgroundColor(
-                          //   color: $styles.colors.offWhite,
-                          //   sliver: SliverToBoxAdapter(
-                          //     child: SizedBox(
-                          //       height: 800,
-                          //       child: MarkdownRenderer(experience.text),
-                          //     ),
-                          //   ),
-                          // ),
-
-                          // SliverToBoxAdapter(
-                          //   child: FutureBuilder(
-                          //       // Use a FutureBuilder to wait for the next frame
-                          //       future: Future.delayed(Duration.zero),
-                          //       builder: (context, snapshot) {
-                          //         // if (snapshot.connectionState == ConnectionState.done &&
-                          //     _markdownRenderHeight != null) {
-                          //   // Return the SizedBox once we have the height
-                          //   return SizedBox(
-                          //     height: _markdownRenderHeight,
-                          //     child: SizedBox(
-                          //       height: _markdownRenderHeight,
-                          //       child: MarkdownRenderer(
-                          //         key: _markdownRenderKey,
-                          //         experience.text,
-                          //         scroller: _scroller,
-                          //         style: MarkdownStyleSheet(
-                          //           p: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   );
-                          // }
-                          // return SizedBox(
-                          //   height: 1000,
-                          //   child: MarkdownRenderer(
-                          //     key: _markdownRenderKey,
-                          //     experience.text,
-                          //     scroller: _scroller,
-                          //     style: MarkdownStyleSheet(
-                          //       p: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-                          //     ),
-                          //   ),
-                          // );
-
-                          //   return SliverFillRemaining(
-                          //     hasScrollBody: false,
-                          //     child: SingleChildScrollView(
-                          //       child: MarkdownRenderer(
-                          //         key: _markdownRenderKey,
-                          //         experience.text,
-                          //         scroller: _scroller,
-                          //         style: MarkdownStyleSheet(
-                          //           p: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   );
-                          // }),
-                          // ),
-
-                          // SliverFillRemaining(
-                          //   hasScrollBody: false,
-                          //   child: SingleChildScrollView(
-                          //     child: MarkdownRenderer(
-                          //       key: _markdownRenderKey,
-                          //       experience.text,
-                          //       scroller: _scroller,
-                          //       style: MarkdownStyleSheet(
-                          //         p: $styles.text.body.copyWith(color: $styles.colors.offWhite),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-
-                          // SliverToBoxAdapter(
-                          //   child: IntrinsicHeight(
-                          //     child: MarkdownRenderer(experience.text),
-                          //   ),
-                          // ),
-                          // SliverToBoxAdapter(
-                          //   child: ShrinkWrappingViewport(
-                          //     offset: ViewportOffset.zero(),
-                          //     slivers: [SliverToBoxAdapter(child: MarkdownRenderer(experience.text))],
-                          //   ),
-                          // ),
-                          // SliverToBoxAdapter(
-                          //   key: ValueKey(experience.title),
-                          //   child: SingleChildScrollView(
-                          //     child: MarkdownRenderer(experience.text),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
@@ -258,7 +134,8 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                 ),
               ),
 
-              const AppHeader(backIcon: AppIcons.north, isTransparent: true)
+              // const AppHeader(backIcon: AppIcons.north, isTransparent: true)
+              const AppHeader(backIcon: Icons.arrow_upward, isTransparent: true)
             ],
           ),
         ),

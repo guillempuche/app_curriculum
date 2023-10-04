@@ -30,7 +30,6 @@ export './styles/styles.dart';
 export './ui/app_scaffold.dart';
 export './ui/common/controls/app_image.dart';
 export './ui/common/controls/buttons.dart';
-export './ui/common/controls/circle_buttons.dart';
 export './ui/common/controls/scroll_decorator.dart';
 export './ui/common/controls/vertical_navigation/vertical_swipe_navigator.dart';
 export './ui/common/controls/vertical_navigation/vertical_transition.dart';

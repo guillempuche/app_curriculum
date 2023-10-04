@@ -2,10 +2,10 @@ import '../../../../../common_libs.dart';
 import '../../common/controls/app_page_indicator.dart';
 import '../../common/themed_text.dart';
 import '../../common/utils/app_haptics.dart';
-import '../../wonder_illustrations/common/animated_clouds.dart';
-import '../../wonder_illustrations/common/experience_illustration.dart';
-import '../../wonder_illustrations/common/wonder_illustration_config.dart';
-import '../../wonder_illustrations/common/experience_title_text.dart';
+import '../../experience_illustrations/common/animated_clouds.dart';
+import '../../experience_illustrations/common/experience_illustration.dart';
+import '../../experience_illustrations/common/wonder_illustration_config.dart';
+import '../../experience_illustrations/common/experience_title_text.dart';
 
 part '_vertical_swipe_controller.dart';
 part 'widgets/_animated_arrow_button.dart';
@@ -107,7 +107,6 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
 
   void _showDetailsPage(BuildContext context) async {
     _swipeOverride = _swipeController.swipeAmt.value;
-    // await Future.delayed(100.ms);
     _swipeOverride = null;
     _fadeInOnNextBuild = true;
     context.push(ScreenPaths.experienceDetails(currentExperience.type));
@@ -193,6 +192,8 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
   }
 
   Widget _buildFgAndGradients() {
+    const gradientColor = Colors.red;
+
     Widget buildSwipeableBgGradient(Color fgColor) {
       return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
         return IgnorePointer(
@@ -215,9 +216,6 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
         );
       });
     }
-
-    // final gradientColor = currentExperience.type.bgColor;
-    final gradientColor = Colors.red;
 
     return Stack(children: [
       /// Foreground gradient-1, gets darker when swiping up
@@ -262,8 +260,6 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                   const SizedBox(width: double.infinity),
                   const Spacer(),
 
-                  // _swipeController.wrapGestureDetector(
-
                   /// Title Content
                   Column(
                     children: [
@@ -294,56 +290,31 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                                 onPressed: () => _showDetailsPage(context),
                               ),
                               Gap($styles.insets.md),
-                              AppPageIndicator(
-                                count: _numExperiences,
-                                controller: _pageController,
-                                color: $styles.colors.white,
-                                dotSize: 8,
-                                onDotPressed: _handlePageIndicatorDotPressed,
-                                semanticPageTitle: $strings.homeSemanticWonder,
-                              ),
+                              PlatformInfo.isSwipeEnabled(context)
+                                  ? AppPageIndicator(
+                                      count: _numExperiences,
+                                      controller: _pageController,
+                                      // color: $styles.colors.white,
+                                      onDotPressed: _handlePageIndicatorDotPressed,
+                                      semanticPageTitle: $strings.homeSemanticWonder,
+                                    )
+                                  : PageNavButtons(
+                                      // color: $styles.colors.offWhite,
+                                      onStartButtonPressed: () => _setPageIndex(_experienceIndex - 1),
+                                      onEndButtonPressed: () => _setPageIndex(_experienceIndex + 1),
+                                      child: AppPageIndicator(
+                                        count: _numExperiences,
+                                        controller: _pageController,
+                                        // color: $styles.colors.accent1,
+                                        onDotPressed: _handlePageIndicatorDotPressed,
+                                        semanticPageTitle: $strings.homeSemanticWonder,
+                                      ),
+                                    ),
                               Gap($styles.insets.md),
                             ],
                           ),
                         ),
                       ),
-
-                      /// Animated arrow and background
-                      /// Wrap in a container that is full-width to make it easier to find for screen readers
-                      // Container(
-                      //   width: double.infinity,
-                      //   alignment: Alignment.center,
-
-                      //   /// Lose state of child objects when index changes, this will re-run all the animated switcher and the arrow anim
-                      //   key: ValueKey(_experienceIndex),
-                      //   child: Stack(
-                      //     children: [
-                      //       /// Expanding rounded rect that grows in height as user swipes up
-                      //       Positioned.fill(
-                      //           child: _swipeController.buildListener(
-                      //         builder: (swipeAmt, _, child) {
-                      //           double heightFactor = .5 + .5 * (1 + swipeAmt * 4);
-                      //           return FractionallySizedBox(
-                      //             alignment: Alignment.bottomCenter,
-                      //             heightFactor: heightFactor,
-                      //             child: Opacity(opacity: swipeAmt * .5, child: child),
-                      //           );
-                      //         },
-                      //         child: VtGradient(
-                      //           [$styles.colors.white.withOpacity(0), $styles.colors.white.withOpacity(1)],
-                      //           const [.3, 1],
-                      //           borderRadius: BorderRadius.circular(99),
-                      //         ),
-                      //       )),
-
-                      //       /// Arrow Btn that fades in and out
-                      //       _AnimatedArrowButton(
-                      //         onTap: () => context.push(ScreenPaths.projects),
-                      //         semanticTitle: currentWonder.title,
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       const SizedBox(height: 150),
                     ],
                   ),
@@ -353,20 +324,6 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
           ),
         ),
       ),
-
-      // /// Menu Btn
-      // BottomLeft(
-      //   child: AnimatedOpacity(
-      //     duration: $styles.times.fast,
-      //     opacity: _isMenuOpen ? 0 : 1,
-      //     child: AppHeader(
-      //       backIcon: AppIcons.menu,
-      //       backBtnSemantics: $strings.homeSemanticOpenMain,
-      //       onBack: _handleOpenMenuPressed,
-      //       isTransparent: true,
-      //     ),
-      //   ),
-      // ),
     ]);
   }
 }

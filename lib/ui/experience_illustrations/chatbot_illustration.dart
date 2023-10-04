@@ -1,9 +1,9 @@
 import '../../common_libs.dart';
 import '../common/fade_color_transition.dart';
-import '../wonder_illustrations/common/illustration_piece.dart';
-import '../wonder_illustrations/common/paint_textures.dart';
-import '../wonder_illustrations/common/experience_illustration_builder.dart';
-import '../wonder_illustrations/common/wonder_illustration_config.dart';
+import './common/illustration_piece.dart';
+import './common/paint_textures.dart';
+import './common/experience_illustration_builder.dart';
+import './common/wonder_illustration_config.dart';
 
 class GreatWallIllustration extends StatelessWidget {
   GreatWallIllustration({Key? key, required this.config}) : super(key: key);

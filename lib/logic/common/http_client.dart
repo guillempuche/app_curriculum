@@ -4,7 +4,6 @@ import 'dart:developer' as dev;
 import 'package:http/http.dart' as http;
 
 import '../common/rest_utils.dart';
-import '../common/string_utils.dart';
 
 enum NetErrorType {
   none,
@@ -18,8 +17,7 @@ enum MethodType { get, post, put, patch, delete, head }
 typedef HttpRequest = Future<http.Response> Function();
 
 class HttpClient {
-  static Future<HttpResponse> get(String url,
-      {Map<String, String>? headers}) async {
+  static Future<HttpResponse> get(String url, {Map<String, String>? headers}) async {
     return await _request(() async {
       return await http.get(Uri.parse(url), headers: headers);
     });
@@ -94,7 +92,7 @@ class ServiceResult<R> {
   bool get success => response.success && !parseError;
 
   ServiceResult(this.response, R Function(Map<String, dynamic>) parser) {
-    if (StringUtils.isNotEmpty(response.body) && response.success) {
+    if (response.body?.isNotEmpty == true && response.success) {
       try {
         content = parser.call(jsonDecode(response.body!));
       } on FormatException catch (e) {

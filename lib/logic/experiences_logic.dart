@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../common_libs.dart';
-import 'data/experience_data.dart';
 
 class ExperiencesLogic {
   List<ExperienceData> all = [];
@@ -36,7 +35,6 @@ ExperienceData _experienceFromJson(Map<String, dynamic> data) => ExperienceData(
       type: _mapIdToExperienceType(data['experience_id']),
       title: data['title'],
       languages: _getLocales(data['languages']),
-      image: data['image'],
       text: data['text'],
       startDate: data['start_date'] != null ? DateTime.parse(data['start_date']) : null,
       endDate: data['end_date'] != null ? DateTime.parse(data['end_date']) : null,

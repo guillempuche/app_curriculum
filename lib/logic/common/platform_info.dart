@@ -24,6 +24,9 @@ class PlatformInfo {
 
   static Future<bool> get isConnected async => await InternetConnectionChecker().hasConnection;
   static Future<bool> get isDisconnected async => (await isConnected) == false;
+
+  /// Only desktop & medium and large screen won't show swipe page navigation.
+  static bool isSwipeEnabled(BuildContext context) => !(PlatformInfo.isWeb && ScreenInfo.isMediumOrLarge(context));
 }
 
 /// Screen screen gives some information of the screen of the device.

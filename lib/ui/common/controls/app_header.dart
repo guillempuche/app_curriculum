@@ -1,5 +1,4 @@
 import '../../../common_libs.dart';
-import '../app_icons.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader(
@@ -10,13 +9,14 @@ class AppHeader extends StatelessWidget {
       this.isTransparent = false,
       this.onBack,
       this.trailing,
-      this.backIcon = AppIcons.prev,
+      // this.backIcon = AppIcons.prev,
+      this.backIcon = Icons.arrow_back,
       this.backBtnSemantics})
       : super(key: key);
   final String? title;
   final String? subtitle;
   final bool showBackBtn;
-  final AppIcons backIcon;
+  final IconData backIcon;
   final String? backBtnSemantics;
   final bool isTransparent;
   final VoidCallback? onBack;
@@ -42,10 +42,9 @@ class AppHeader extends StatelessWidget {
                         icon: backIcon,
                         semanticLabel: backBtnSemantics,
                       ),
-                    Spacer(),
+                    const Spacer(),
                     if (trailing != null) trailing!.call(context),
                     Gap($styles.insets.sm),
-                    //if (showBackBtn) Container(width: $styles.insets.lg * 2, alignment: Alignment.centerLeft, child: child),
                   ]),
                 ),
               ),

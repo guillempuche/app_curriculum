@@ -1,4 +1,3 @@
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:guillem_curriculum/logic/common/string_utils.dart';
 import 'package:guillem_curriculum/ui/common/markdown_renderer.dart';
 

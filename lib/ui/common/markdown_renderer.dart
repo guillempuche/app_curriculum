@@ -1,5 +1,3 @@
-import 'dart:html' as html;
-
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -69,7 +67,7 @@ class MarkdownRenderer extends StatelessWidget {
       shrinkWrap: true,
       softLineBreak: true,
       onTapLink: (text, url, title) async {
-        if (url?.startsWith('https') == true && await canLaunchUrl(Uri.parse(url!))) {
+        if (url?.startsWith('http') == true && await canLaunchUrl(Uri.parse(url!))) {
           // Open the first kind of link new tab on the browser. Read more in the component's description.
           await launchUrl(
             Uri.parse(url),

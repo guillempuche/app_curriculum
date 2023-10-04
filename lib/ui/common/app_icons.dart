@@ -4,8 +4,7 @@ import 'package:flutter/foundation.dart';
 import '../../common_libs.dart';
 
 class AppIcon extends StatelessWidget {
-  const AppIcon(this.icon, {Key? key, this.size = 22, this.color})
-      : super(key: key);
+  const AppIcon(this.icon, {Key? key, this.size = 22, this.color}) : super(key: key);
   final AppIcons icon;
   final double size;
   final Color? color;
@@ -14,16 +13,13 @@ class AppIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     String i = describeEnum(icon).toLowerCase().replaceAll('_', '-');
     String path = 'assets/images/_common/icons/icon-$i.png';
-    //print(path);
+
     return SizedBox(
       width: size,
       height: size,
       child: Center(
         child: Image.asset(path,
-            width: size,
-            height: size,
-            color: color ?? $styles.colors.offWhite,
-            filterQuality: FilterQuality.high),
+            width: size, height: size, color: color ?? $styles.colors.offWhite, filterQuality: FilterQuality.high),
       ),
     );
   }

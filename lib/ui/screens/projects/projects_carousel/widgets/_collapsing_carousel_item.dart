@@ -37,7 +37,7 @@ class _CollapsingCarouselItem extends StatelessWidget {
             // Center item is portrait, the others are square
             height: indexOffset == 0 ? tallHeight : width,
             width: width,
-            padding: indexOffset == 0 ? EdgeInsets.all(0) : EdgeInsets.all(width * .1),
+            padding: indexOffset == 0 ? const EdgeInsets.all(0) : EdgeInsets.all(width * .1),
             child: child,
           ),
         ),

@@ -9,16 +9,15 @@ class AppPageIndicator extends StatefulWidget {
     required this.controller,
     this.onDotPressed,
     this.color,
-    this.dotSize,
+    this.dotSize = 8,
     String? semanticPageTitle,
-  })  : semanticPageTitle =
-            semanticPageTitle ?? $strings.appPageDefaultTitlePage,
+  })  : semanticPageTitle = semanticPageTitle ?? $strings.appPageDefaultTitlePage,
         super(key: key);
   final int count;
   final PageController controller;
   final void Function(int index)? onDotPressed;
   final Color? color;
-  final double? dotSize;
+  final double dotSize;
   final String semanticPageTitle;
 
   @override
@@ -62,7 +61,7 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
                   child: Container());
             }),
       ),
-      Positioned.fill(
+      Positioned(
         child: Center(
           child: ExcludeSemantics(
             child: SmoothPageIndicator(
@@ -70,10 +69,10 @@ class _AppPageIndicatorState extends State<AppPageIndicator> {
               count: widget.count,
               onDotClicked: widget.onDotPressed,
               effect: ExpandingDotsEffect(
-                  dotWidth: widget.dotSize ?? 6,
-                  dotHeight: widget.dotSize ?? 6,
+                  dotWidth: widget.dotSize,
+                  dotHeight: widget.dotSize,
                   paintStyle: PaintingStyle.fill,
-                  strokeWidth: (widget.dotSize ?? 6) / 2,
+                  strokeWidth: widget.dotSize / 2,
                   dotColor: widget.color ?? $styles.colors.accent1,
                   activeDotColor: widget.color ?? $styles.colors.accent1,
                   expansionFactor: 2),
