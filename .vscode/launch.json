@@ -91,7 +91,7 @@
 			"name": "iPh:em:dt",
 			"request": "launch",
 			"type": "dart",
-			"deviceId": "18D992F1-3C94-461B-AEAC-377D61EA3445", // iPhone 14 Pro Max iOS 16.4
+			"deviceId": "39757DE5-8623-4310-A902-68D9D7705DC0", // iPhone 14 Pro Max iOS 17.0
 			// "deviceId": "8B78F961-A045-4790-B618-ACA7D709DB41", // iPhone SE iOS 16.4
 			// "deviceId": "073A14BC-0E62-4E7F-86C4-55CA8D98E9A8", // iPhone 12 Pro Max iOS 14.5
 			"program": "lib${pathSeparator}main.dart",

@@ -114,8 +114,8 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
 
   void _handlePageChanged(value) {
     if (mounted) {
-      setState(() => _experienceIndex = value % _numExperiences);
       AppHaptics.lightImpact();
+      setState(() => _experienceIndex = value % _numExperiences);
     }
   }
 
@@ -192,7 +192,7 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
   }
 
   Widget _buildFgAndGradients() {
-    const gradientColor = Colors.red;
+    const gradientColor = Color(0xFF1C4D46);
 
     Widget buildSwipeableBgGradient(Color fgColor) {
       return _swipeController.buildListener(builder: (swipeAmt, isPointerDown, _) {
@@ -258,7 +258,7 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(width: double.infinity),
-                  const Spacer(),
+                  const Spacer(flex: 1),
 
                   /// Title Content
                   Column(
@@ -315,7 +315,7 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                           ),
                         ),
                       ),
-                      const SizedBox(height: 150),
+                      const SizedBox(height: 120),
                     ],
                   ),
                 ],

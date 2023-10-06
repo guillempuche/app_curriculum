@@ -27,18 +27,25 @@ class _BottomTextContent extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Gap($styles.insets.md),
+              Gap($styles.insets.sm),
               Column(
                 children: [
-                  PageNavButtons(
-                    child: AppPageIndicator(
+                  if (PlatformInfo.isSwipeEnabled(context))
+                    AppPageIndicator(
                       count: state._projects.length,
                       controller: state._pageController!,
                       semanticPageTitle: $strings.projectSemanticProject,
+                    )
+                  else
+                    PageNavButtons(
+                      onStartButtonPressed: () => state._handleProjectTap(_currentPage - 1),
+                      onEndButtonPressed: () => state._handleProjectTap(_currentPage + 1),
+                      child: AppPageIndicator(
+                        count: state._projects.length,
+                        controller: state._pageController!,
+                        semanticPageTitle: $strings.projectSemanticProject,
+                      ),
                     ),
-                    onStartButtonPressed: () => state._handleProjectTap(_currentPage - 1),
-                    onEndButtonPressed: () => state._handleProjectTap(_currentPage + 1),
-                  ),
                   Gap($styles.insets.sm),
                   IgnorePointer(
                     ignoringSemantics: false,
@@ -59,7 +66,8 @@ class _BottomTextContent extends StatelessWidget {
                             child: Text(
                               project.title,
                               overflow: TextOverflow.ellipsis,
-                              style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
+                              // style: $styles.text.h2.copyWith(color: $styles.colors.black, height: 1.2, fontSize: 32),
+                              style: $styles.text.h3.copyWith(color: $styles.colors.black),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),

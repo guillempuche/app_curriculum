@@ -60,7 +60,8 @@ class _Text {
   final double _scale;
 
   final Map<String, TextStyle> _titleFonts = {
-    'en': const TextStyle(fontFamily: 'Tenor'),
+    // 'en': const TextStyle(fontFamily: 'Tenor'),
+    'en': const TextStyle(fontFamily: 'Yeseva'),
   };
 
   final Map<String, TextStyle> _monoTitleFonts = {
@@ -98,12 +99,13 @@ class _Text {
 
   late final TextStyle dropCase = _createFont(quoteFont, sizePx: 56, heightPx: 20);
 
-  late final TextStyle experienceTitle = _createFont(experienceTitleFont, sizePx: 45, heightPx: 50);
+  late final TextStyle introTitle = _createFont(experienceTitleFont, sizePx: 30, heightPx: 37);
+  late final TextStyle experienceTitle = _createFont(experienceTitleFont, sizePx: 37, heightPx: 42);
 
   late final TextStyle h1 = _createFont(titleFont, sizePx: 64, heightPx: 62);
-  late final TextStyle h2 = _createFont(titleFont, sizePx: 32, heightPx: 46);
-  late final TextStyle h3 = _createFont(titleFont, sizePx: 24, heightPx: 36, weight: FontWeight.w600);
-  late final TextStyle h4 = _createFont(contentFont, sizePx: 19, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+  late final TextStyle h2 = _createFont(titleFont, sizePx: 32, heightPx: 40);
+  late final TextStyle h3 = _createFont(titleFont, sizePx: 24, heightPx: 36);
+  late final TextStyle h4 = _createFont(contentFont, sizePx: 19, heightPx: 23, spacingPc: 5, weight: FontWeight.w500);
 
   late final TextStyle title1 = _createFont(titleFont, sizePx: 16, heightPx: 26, spacingPc: 5);
   late final TextStyle title2 = _createFont(titleFont, sizePx: 14, heightPx: 16.38);

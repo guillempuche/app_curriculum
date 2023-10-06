@@ -39,20 +39,24 @@ class VerticalSwipeNavigator extends StatelessWidget {
           child,
           if (goBackPath != null && backDirection != null)
             Positioned(
-              top: 20,
-              child: _AnimatedArrowButton(
-                direction: _ButtonDirection.top,
-                isSwipeText: PlatformInfo.isSwipeEnabled(context),
-                onTap: () => context.go(goBackPath!, extra: backDirection!),
+              top: 5,
+              child: SafeArea(
+                child: _AnimatedArrowButton(
+                  direction: _ButtonDirection.top,
+                  isSwipeText: PlatformInfo.isSwipeEnabled(context),
+                  onTap: () => context.go(goBackPath!, extra: backDirection!),
+                ),
               ),
             ),
           if (goForwardPath != null && forwardDirection != null)
             Positioned(
-              bottom: 20,
-              child: _AnimatedArrowButton(
-                direction: _ButtonDirection.bottom,
-                isSwipeText: PlatformInfo.isSwipeEnabled(context),
-                onTap: () => context.go(goForwardPath!, extra: forwardDirection!),
+              bottom: 7,
+              child: SafeArea(
+                child: _AnimatedArrowButton(
+                  direction: _ButtonDirection.bottom,
+                  isSwipeText: PlatformInfo.isSwipeEnabled(context),
+                  onTap: () => context.go(goForwardPath!, extra: forwardDirection!),
+                ),
               ),
             ),
         ],
