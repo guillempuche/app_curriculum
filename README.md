@@ -25,7 +25,23 @@ Run the app:
 
 > If you want to use multiple languages (half implemented), use `flutter run` will automatically generated [translations](https://docs.flutter.dev/accessibility-and-localization/internationalization).
 
+## Build and release on app stores
+
+For Android, follow this guide https://docs.flutter.dev/deployment/android
+For iOS, this guide https://docs.flutter.dev/deployment/ios
+
+> Reminder. The guide section about creating a key for Play Store, you'll need it to build the app, you will need to add called `key.properties` in `android` folder.
+> Replace the example value for yours.
+> ```
+> keyAliasRelease=alias
+> keyPasswordRelease=passsord
+> storeFileRelease=/path/keystore.jks
+> storePasswordRelease=password
+> ```
+
 ## Deploy on web
+
+Apart from following this guide https://docs.flutter.dev/deployment/web, also do this:
 
 1. Copy `main` branch to a new branch, e.g. `web-new`.
 2. Run `flutter build web` or `flutter build web --release` to make the size smaller.
