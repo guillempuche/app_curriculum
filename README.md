@@ -1,4 +1,4 @@
-# Guillem Currriculm App
+# App as a personal Curriculum Vitae
 
 ![Screenshots of the app](docs/app-screenshots.png)
 
