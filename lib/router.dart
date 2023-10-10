@@ -1,6 +1,7 @@
 import '../ui/screens/experiences/experience_detail/experience_detail_screen.dart';
 import 'common_libs.dart';
 import 'logic/common/platform_specific.dart' if (dart.library.html) 'logic/common/platform_specific_web.dart';
+import 'ui/screens/about/about.dart';
 import 'ui/screens/projects/project_details/project_details_screen.dart';
 import 'ui/screens/projects/projects_carousel/projects_carousel_screen.dart';
 import 'ui/screens/experiences/experiences_screen.dart';
@@ -11,12 +12,11 @@ class ScreenPaths {
   static String splash = '/';
   static String intro = '/introduction';
   static String experiences = '/experiences';
-  static String projects = '/projects';
   static String experienceRoot = '/experience/';
   static String experienceDetails(ExperienceType type) => '${ScreenPaths.experienceRoot}${type.name}';
-  // static String experienceDetails(ExperienceType type, {int tabIndex = 0}) =>
-  //     '/experience/${type.name}?tabIndex=$tabIndex';
+  static String projects = '/projects';
   // static String library = '/library';
+  static String about = '/about';
   static String video(String id) => '/video/$id';
   static String highlights(WonderType type) => '/highlights/${type.name}';
   static String search(WonderType type) => '/search/${type.name}';
@@ -44,11 +44,13 @@ class ScreenUtility {
     } else if (path == ScreenPaths.experiences) {
       return ExperiencesScreen();
     } else if (path.startsWith(ScreenPaths.experienceRoot)) {
-      return ExperienceDetailScreen(_parseExperienceType(path));
+      return ExperienceDetailScreen(type);
     } else if (path == ScreenPaths.projects) {
       return const ProjectsCarouselScreen();
     } else if (path.startsWith(ScreenPaths.projectRoot) && id != null) {
       return ProjectDetailsScreen(projectId: id);
+    } else if (path == ScreenPaths.about) {
+      return const AboutScreen();
     } else {
       throw Exception('Invalid path: $path');
     }
@@ -87,6 +89,10 @@ final appRouter = GoRouter(
           ),
           GoRoute(
             path: '/project/:id',
+            pageBuilder: pageBuilder,
+          ),
+          GoRoute(
+            path: ScreenPaths.about,
             pageBuilder: pageBuilder,
           ),
         ]),

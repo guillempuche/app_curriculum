@@ -11,6 +11,7 @@ MarkdownStyleSheet generatorMarkdownStyle(Color color) => MarkdownStyleSheet(
       h3: $styles.text.h3.copyWith(color: color),
       h4: $styles.text.h4.copyWith(color: color),
       p: $styles.text.body.copyWith(color: color),
+      pPadding: const EdgeInsets.only(bottom: 10),
       listBullet: $styles.text.body.copyWith(color: color),
     );
 
@@ -56,18 +57,18 @@ class MarkdownRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedMarkdown = markdownData.replaceAllMapped(RegExp(r'\\n'), (match) => '\n');
+    // String formattedMarkdown = markdownData.replaceAllMapped(RegExp(r'\\n'), (match) => '\r');
 
     return Markdown(
-      data: formattedMarkdown,
-      styleSheet: style,
+      data: markdownData,
+      styleSheet: style ?? generatorMarkdownStyle($styles.colors.offWhite),
       selectable: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(0),
       shrinkWrap: true,
       softLineBreak: true,
-      onTapLink: (text, url, title) async {
-        if (url?.startsWith('http') == true && await canLaunchUrl(Uri.parse(url!))) {
+      onTapLink: (_, url, __) async {
+        if (url?.startsWith('https') == true && await canLaunchUrl(Uri.parse(url!))) {
           // Open the first kind of link new tab on the browser. Read more in the component's description.
           await launchUrl(
             Uri.parse(url),
@@ -109,9 +110,9 @@ class LinkElementBuilder extends MarkdownElementBuilder {
     String? link = element.attributes['href'];
 
     // `element.textContent` as `[Text without starting with a URL](url)` won't be beautified.
-    if (!element.textContent.startsWith('http') ||
+    if (!element.textContent.startsWith('https') ||
         link == null ||
-        !AnyLinkPreview.isValidLink(link, protocols: ['http', 'https'])) {
+        !AnyLinkPreview.isValidLink(link, protocols: ['https'])) {
       return null;
     }
     return Material(

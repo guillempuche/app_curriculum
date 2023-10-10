@@ -1,5 +1,4 @@
 import '../common_libs.dart';
-import './common/app_scroll_behavior.dart';
 
 class AppScaffold extends StatelessWidget {
   const AppScaffold({Key? key, required this.child}) : super(key: key);
@@ -24,11 +23,7 @@ class AppScaffold extends StatelessWidget {
         // Provide a default texts style to allow Hero's to render text properly
         child: DefaultTextStyle(
           style: $styles.text.body,
-          // Use a custom scroll behavior across entire app
-          child: ScrollConfiguration(
-            behavior: AppScrollBehavior(),
-            child: child,
-          ),
+          child: child,
         ),
       ),
     );

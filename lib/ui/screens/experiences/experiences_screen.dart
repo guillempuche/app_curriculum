@@ -277,7 +277,10 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                                   onIncrease: () => _setPageIndex(_experienceIndex + 1),
                                   onDecrease: () => _setPageIndex(_experienceIndex - 1),
                                   // Hide the title when the menu is open for visual polish
-                                  child: ExperienceTitleText(currentExperience, enableShadows: true),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: ExperienceTitleText(currentExperience, enableShadows: true),
+                                  ),
                                 ),
                               ),
                               Gap($styles.insets.md),
@@ -294,18 +297,15 @@ class _ExperiencesScreenState extends State<ExperiencesScreen> with SingleTicker
                                   ? AppPageIndicator(
                                       count: _numExperiences,
                                       controller: _pageController,
-                                      // color: $styles.colors.white,
                                       onDotPressed: _handlePageIndicatorDotPressed,
                                       semanticPageTitle: $strings.homeSemanticWonder,
                                     )
                                   : PageNavButtons(
-                                      // color: $styles.colors.offWhite,
                                       onStartButtonPressed: () => _setPageIndex(_experienceIndex - 1),
                                       onEndButtonPressed: () => _setPageIndex(_experienceIndex + 1),
                                       child: AppPageIndicator(
                                         count: _numExperiences,
                                         controller: _pageController,
-                                        // color: $styles.colors.accent1,
                                         onDotPressed: _handlePageIndicatorDotPressed,
                                         semanticPageTitle: $strings.homeSemanticWonder,
                                       ),

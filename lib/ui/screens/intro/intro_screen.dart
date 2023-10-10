@@ -2,11 +2,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../common_libs.dart';
 import '../../common/controls/app_page_indicator.dart';
-import '../../common/gradient_container.dart';
 import '../../common/themed_text.dart';
 import '../../common/utils/app_haptics.dart';
 
-const double _maxImageHeight = 250;
+const double _maxImageHeightMin = 300;
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -22,6 +21,8 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return VerticalSwipeNavigator(
       forwardDirection: TransitionDirection.topToBottom,
       goForwardPath: ScreenPaths.experiences,
@@ -33,37 +34,25 @@ class _IntroScreenState extends State<IntroScreen> {
             child: Animate(
               delay: 500.ms,
               effects: const [FadeEffect()],
-              child: SizedBox(
-                // constraints: BoxConstraints(
-                //   maxHeight: MediaQuery.of(context).size.height,
-                //   maxWidth: MediaQuery.of(context).size.width,
-                // ),
-                // height: MediaQuery.of(context).size.height,
-                // width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Flex(
-                      direction: Axis.vertical,
-                      children: [
-                        Spacer(),
-                        SizedBox(
-                          height: 480,
-                          child: Pages(
-                            controller: _pageController,
-                            pageData: pageData,
-                          ),
-                        ),
-                        NavigationControls(
+              child: Center(
+                child: SizedBox(
+                  width: 600,
+                  child: Column(
+                    children: [
+                      Flexible(
+                        child: Pages(
                           controller: _pageController,
                           pageData: pageData,
                         ),
-                        SizedBox(height: 90)
-                      ],
-                    ),
-                    _buildHzGradientOverlay(left: true),
-                    _buildHzGradientOverlay(),
-                  ],
+                      ),
+                      Gap($styles.insets.md),
+                      NavigationControls(
+                        controller: _pageController,
+                        pageData: pageData,
+                      ),
+                      SizedBox(height: screenHeight * 0.2),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -80,27 +69,6 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void _handlePageChanged() => _currentPage.value = _pageController.page?.round() ?? 0;
-
-  Widget _buildHzGradientOverlay({bool left = false}) {
-    return Align(
-      alignment: Alignment(left ? -1 : 1, 0),
-      child: FractionallySizedBox(
-        widthFactor: .4,
-        child: Padding(
-          padding: EdgeInsets.only(left: left ? 0 : 200, right: left ? 200 : 0),
-          child: Transform.scale(
-              scaleX: left ? -1 : 1,
-              child: HzGradient([
-                $styles.colors.black.withOpacity(0),
-                $styles.colors.black,
-              ], const [
-                0,
-                .2
-              ])),
-        ),
-      ),
-    );
-  }
 }
 
 class PageData {
@@ -126,7 +94,7 @@ class PageData {
           desc: 'Purpose-driven service-minded, entrepreneur, first principles, customer-focused',
           image: 'silhouette.png',
           mask: '1',
-          imageHeight: _maxImageHeight,
+          imageHeight: _maxImageHeightMin,
         ),
         const PageData(
           title: 'Not Merely A Resume, But A Journey',
@@ -134,13 +102,13 @@ class PageData {
               'Engage, explore, and enjoy my curated professional journey in app & web form that took +150 hours to complete',
           image: 'airplane.png',
           mask: '2',
-          imageHeight: _maxImageHeight - 150,
+          imageHeight: _maxImageHeightMin - 50,
         ),
         const PageData(
           title: 'Download The App For The Best Experience',
           image: 'mobile.png',
           mask: '3',
-          imageHeight: _maxImageHeight - 150,
+          imageHeight: _maxImageHeightMin - 50,
         )
       ];
 }
@@ -159,17 +127,14 @@ class Pages extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> pages = pageData.map((e) => PageContent(data: e)).toList();
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 500),
-      child: PageView(
-        controller: controller,
-        // Disable the swipe navigation
-        physics: !PlatformInfo.isSwipeEnabled(context)
-            ? const NeverScrollableScrollPhysics()
-            : const AlwaysScrollableScrollPhysics(),
-        onPageChanged: (_) => AppHaptics.lightImpact(),
-        children: pages,
-      ),
+    return PageView(
+      controller: controller,
+      // Disable the swipe navigation
+      physics: !PlatformInfo.isSwipeEnabled(context)
+          ? const NeverScrollableScrollPhysics()
+          : const AlwaysScrollableScrollPhysics(),
+      onPageChanged: (_) => AppHaptics.lightImpact(),
+      children: pages,
     );
   }
 }
@@ -189,51 +154,39 @@ class PageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       liveRegion: true,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: $styles.insets.md),
-        child: AnimatedSwitcher(
-          duration: $styles.times.slow,
-          child: KeyedSubtree(
-            key: ValueKey(data.image),
+      child: AnimatedSwitcher(
+        duration: $styles.times.slow,
+        child: KeyedSubtree(
+          key: ValueKey(data.image),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  // mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: _maxImageHeight,
-                      child: Image.asset(
-                        // height: data.imageHeight,
-                        '${ImagePaths.common}/${data.image}',
-                        // fit: BoxFit.fitHeight,
-                        fit: BoxFit.contain,
-                        alignment: Alignment.center,
-                      ),
-                    ),
-                    Gap($styles.insets.sm),
-                    SizedBox(
-                      height: 80,
-                      child: Center(
-                        child: Text(
-                          data.title,
-                          style: $styles.text.h2,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    Gap($styles.insets.sm),
-                    if (data.desc != null)
-                      Text(
-                        data.desc!,
-                        style: $styles.text.body,
-                        textAlign: TextAlign.center,
-                      )
-                    else
-                      _storeBadges(),
-                  ],
+                SizedBox(
+                  height: data.imageHeight,
+                  child: Image.asset(
+                    height: data.imageHeight,
+                    '${ImagePaths.common}/${data.image}',
+                    alignment: Alignment.center,
+                  ),
                 ),
+                Gap($styles.insets.sm),
+                Text(
+                  data.title,
+                  style: $styles.text.h2,
+                  textAlign: TextAlign.center,
+                ),
+                Gap($styles.insets.sm),
+                if (data.desc != null)
+                  Text(
+                    data.desc!,
+                    style: $styles.text.body,
+                    textAlign: TextAlign.center,
+                  )
+                else
+                  _storeBadges(),
               ],
             ),
           ),
@@ -307,6 +260,7 @@ class NavigationControls extends StatelessWidget {
             if (PlatformInfo.isSwipeEnabled(context))
               AppPageIndicator(
                 count: pageData.length,
+                onDotPressed: _handlePageNavigation,
                 controller: controller,
               )
             else
@@ -317,6 +271,7 @@ class NavigationControls extends StatelessWidget {
                 onEndButtonPressed: () => _handlePageNavigation(pageIndex + 1),
                 child: AppPageIndicator(
                   count: pageData.length,
+                  onDotPressed: _handlePageNavigation,
                   controller: controller,
                 ),
               ),

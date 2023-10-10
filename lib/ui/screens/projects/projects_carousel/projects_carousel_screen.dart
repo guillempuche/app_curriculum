@@ -52,6 +52,8 @@ class _ProjectsCarouselScreenState extends State<ProjectsCarouselScreen> {
     return VerticalSwipeNavigator(
       backDirection: TransitionDirection.bottomToTop,
       goBackPath: ScreenPaths.experiences,
+      forwardDirection: TransitionDirection.topToBottom,
+      goForwardPath: ScreenPaths.about,
       child: Stack(
         children: [
           /// Blurred Bg

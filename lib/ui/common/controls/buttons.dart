@@ -1,10 +1,48 @@
 import '../../../common_libs.dart';
 
-import '../app_icons.dart';
+class FilledBtn extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final VoidCallback onPressed;
+
+  const FilledBtn({
+    required this.icon,
+    required this.text,
+    required this.onPressed,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 18),
+            Gap($styles.insets.xs),
+            Text(text, style: $styles.text.btn),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 /// Shared methods across button types
-Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondary, required double? size}) =>
-    AppIcon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
+Widget _buildIcon(BuildContext context, IconData icon, {required bool isSecondary, required double? size}) => Icon(
+      icon,
+      size: size ?? 18,
+      color: isSecondary ? $styles.colors.black : $styles.colors.offWhite,
+    );
 
 /// The core button that drives all other buttons.
 class AppBtn extends StatelessWidget {
@@ -39,25 +77,41 @@ class AppBtn extends StatelessWidget {
     this.border,
     String? semanticLabel,
     String? text,
-    AppIcons? icon,
+    IconData? icon,
     double? iconSize,
   })  : child = null,
         circular = false,
         super(key: key) {
     if (semanticLabel == null && text == null) throw ('AppBtn.from must include either text or semanticLabel');
+
     this.semanticLabel = semanticLabel ?? text ?? '';
+
     _builder = (context) {
       if (text == null && icon == null) return const SizedBox.shrink();
+
       Text? txt = text == null
           ? null
           : Text(text.toUpperCase(),
               style: $styles.text.btn, textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false));
-      Widget? icn = icon == null ? null : _buildIcon(context, icon, isSecondary: isSecondary, size: iconSize);
+
+      Widget? icn = icon == null
+          ? null
+          : _buildIcon(
+              context,
+              icon,
+              isSecondary: isSecondary,
+              size: iconSize,
+            );
+
       if (txt != null && icn != null) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          children: [txt, Gap($styles.insets.xs), icn],
+          children: [
+            icn,
+            Gap($styles.insets.xs),
+            txt,
+          ],
         );
       } else {
         return (txt ?? icn)!;
@@ -272,6 +326,7 @@ class _PageNavButtonsState extends State<PageNavButtons> with TickerProviderStat
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           FadeTransition(
             opacity: _buttonStartController,

@@ -122,7 +122,6 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                                 child: MarkdownRenderer(
                                   experience.text,
                                   scroller: _scroller,
-                                  style: generatorMarkdownStyle($styles.colors.offWhite),
                                 ),
                               ),
                             ),

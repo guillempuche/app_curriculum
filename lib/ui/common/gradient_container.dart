@@ -44,25 +44,6 @@ class GradientContainer extends StatelessWidget {
       );
 }
 
-class HzGradient extends GradientContainer {
-  const HzGradient(List<Color> colors, List<double> stops,
-      {Key? key,
-      Widget? child,
-      double? width,
-      double? height,
-      Alignment? alignment,
-      BlendMode? blendMode,
-      BorderRadius? borderRadius})
-      : super(colors, stops,
-            key: key,
-            child: child,
-            width: width,
-            height: height,
-            alignment: alignment,
-            blendMode: blendMode,
-            borderRadius: borderRadius);
-}
-
 class VtGradient extends GradientContainer {
   const VtGradient(List<Color> colors, List<double> stops,
       {Key? key,

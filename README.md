@@ -37,4 +37,4 @@ Else delete `dotenv` package and the code related, then replace usage of environ
 
 ## Acknowledgements
 
-App based on [Wonderous app](https://github.com/gskinnerTeam/flutter-wonderous-app).
+Designs based on [Wonderous app](https://github.com/gskinnerTeam/flutter-wonderous-app).

@@ -1,0 +1,4 @@
+keyAliasRelease=alias
+keyPasswordRelease=passsord
+storeFileRelease=/path/keystore.jks
+storePasswordRelease=password
