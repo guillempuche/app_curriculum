@@ -120,8 +120,8 @@
 			"name": "iPa:em:dt",
 			"request": "launch",
 			"type": "dart",
-			"deviceId": "E89F4717-F7D4-4EF7-A085-34DB8D1344C6", // iPad Pro 12.9inch iOS 16.2
-			// "deviceId": "46DFF61A-D461-4659-ACA1-0C92FE8834FA", // iPad Pro 11inch iOS 15.5
+			// "deviceId": "E89F4717-F7D4-4EF7-A085-34DB8D1344C6", // iPad Pro 12.9inch iOS 16.2
+			"deviceId": "177A729C-500E-44BE-9769-56891BB1B047", // iPad Pro 12.9inch iOS 17.0
 			// "deviceId": "29B0D995-4A16-46A8-9D19-D86517AB5586", // iPad 9.7inch iOS 14.5
 			"program": "lib${pathSeparator}main.dart",
 			"flutterMode": "debug",
