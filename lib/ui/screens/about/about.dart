@@ -20,7 +20,7 @@ class _AboutScreenState extends State<AboutScreen> {
       \r\n### Privacy    
       \r\nRead about the Privacy Policy [here](https://www.guillempuche.com/privacy).
       \r\n### Licenses
-      \r\n- Google Play and the Google Play logo are trademarks of Google LLC.
+      ${!PlatformInfo.isAndroid && !PlatformInfo.isIOS ? '\r\n- Google Play and the Google Play logo are trademarks of Google LLC.' : ''}
       \r\n- Illustrations by [dekob2](https://icons8.com/illustrations/author/A7iGlOUD5Neq) from [Ouch!](https://icons8.com/illustrations).''';
 
   @override
@@ -71,10 +71,10 @@ class _AboutScreenState extends State<AboutScreen> {
                         Gap($styles.insets.md),
                         Center(
                           child: Wrap(
-                            alignment: WrapAlignment.start,
+                            alignment: WrapAlignment.center,
                             spacing: $styles.insets.md,
                             runSpacing: $styles.insets.sm,
-                            runAlignment: WrapAlignment.start,
+                            runAlignment: WrapAlignment.center,
                             children: [
                               FilledBtn(
                                 icon: Icons.email,

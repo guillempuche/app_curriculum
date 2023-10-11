@@ -15,13 +15,36 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  final List<PageData> pageData = PageData.data;
   late final PageController _pageController = PageController()..addListener(_handlePageChanged);
   final ValueNotifier<int> _currentPage = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    final pagesData = [
+      const PageData(
+        title: 'Hi, I\'m Guillem Puche',
+        desc: 'Purpose-driven service-minded, entrepreneur, first principles, customer-focused',
+        image: 'silhouette.png',
+        mask: '1',
+        imageHeight: _maxImageHeightMin,
+      ),
+      const PageData(
+        title: 'Not Merely A Resume, But A Journey',
+        desc:
+            'Engage, explore, and enjoy my curated professional journey in app & web form that took +150 hours to complete',
+        image: 'airplane.png',
+        mask: '2',
+        imageHeight: _maxImageHeightMin - 50,
+      ),
+      if (!PlatformInfo.isAndroid && !PlatformInfo.isIOS)
+        const PageData(
+          title: 'Download The App For The Best Experience',
+          image: 'mobile.png',
+          mask: '3',
+          imageHeight: _maxImageHeightMin - 50,
+        )
+    ];
 
     return VerticalSwipeNavigator(
       forwardDirection: TransitionDirection.topToBottom,
@@ -42,13 +65,13 @@ class _IntroScreenState extends State<IntroScreen> {
                       Flexible(
                         child: Pages(
                           controller: _pageController,
-                          pageData: pageData,
+                          pageData: pagesData,
                         ),
                       ),
                       Gap($styles.insets.md),
                       NavigationControls(
                         controller: _pageController,
-                        pageData: pageData,
+                        pageData: pagesData,
                       ),
                       SizedBox(height: screenHeight * 0.2),
                     ],
@@ -87,30 +110,6 @@ class PageData {
 
   /// If description is null, then app stores links will be shown.
   final String? desc;
-
-  static List<PageData> get data => [
-        const PageData(
-          title: 'Hi, I\'m Guillem Puche',
-          desc: 'Purpose-driven service-minded, entrepreneur, first principles, customer-focused',
-          image: 'silhouette.png',
-          mask: '1',
-          imageHeight: _maxImageHeightMin,
-        ),
-        const PageData(
-          title: 'Not Merely A Resume, But A Journey',
-          desc:
-              'Engage, explore, and enjoy my curated professional journey in app & web form that took +150 hours to complete',
-          image: 'airplane.png',
-          mask: '2',
-          imageHeight: _maxImageHeightMin - 50,
-        ),
-        const PageData(
-          title: 'Download The App For The Best Experience',
-          image: 'mobile.png',
-          mask: '3',
-          imageHeight: _maxImageHeightMin - 50,
-        )
-      ];
 }
 
 class Pages extends StatelessWidget {
@@ -125,7 +124,7 @@ class Pages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = pageData.map((e) => PageContent(data: e)).toList();
+    List<Widget> pages = pageData.map((e) => PageContent(data: e)).toList();
 
     return PageView(
       controller: controller,
