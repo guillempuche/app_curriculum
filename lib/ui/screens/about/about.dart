@@ -17,6 +17,7 @@ class _AboutScreenState extends State<AboutScreen> {
   final text2 =
       '''I've built this app (+150 hours) to be not just responsive and multi-platform, but also immersive with captivating animations.
       \r\nCurious about the behind-the-scenes magic? Explore the open-source code [here](https://github.com/guillempuche/app_curriculum). And a nod to the inspirational designs from [this repository](https://github.com/gskinnerTeam/flutter-wonderous-app).
+      \r\nThe app is also iPhone/iPad compatible, but Apple doesn't allow it to be published because apps need to provide "some sort of lasting entertainment value or adequate utility". Read more in [App Store Review Guidelines - Minimum Functionality Section](https://developer.apple.com/app-store/review/guidelines/#design).
       \r\n### Privacy    
       \r\nRead about the Privacy Policy [here](https://www.guillempuche.com/privacy).
       \r\n### Licenses

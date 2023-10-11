@@ -147,7 +147,7 @@ class PageContent extends StatelessWidget {
   final PageData data;
 
   final androidLink = Uri.parse('https://play.google.com/store/apps/details?id=com.guillempuche.guillem_curriculum');
-  final _storeBadeHeight = 45.0;
+  final _storeBadeHeight = 50.0;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +198,23 @@ class PageContent extends StatelessWidget {
                     textAlign: TextAlign.center,
                   )
                 else
-                  _storeBadges(),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (await canLaunchUrl(androidLink)) {
+                          await launchUrl(
+                            androidLink,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
+                      child: Image.asset(
+                        '${ImagePaths.common}/google-play-badge.png',
+                        height: _storeBadeHeight,
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -206,45 +222,6 @@ class PageContent extends StatelessWidget {
       ),
     );
   }
-
-  Widget _storeBadges() => Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () async {
-                if (await canLaunchUrl(androidLink)) {
-                  await launchUrl(
-                    androidLink,
-                    mode: LaunchMode.externalApplication,
-                  );
-                }
-              },
-              child: Image.asset(
-                '${ImagePaths.common}/google-play-badge.png',
-                height: _storeBadeHeight,
-              ),
-            ),
-          ),
-          Gap($styles.insets.md),
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () async {
-                // if (await canLaunchUrl(androidLink)) {
-                //   await launchUrl(iOsLink,mode: LaunchMode.externalApplication,);
-                // }
-              },
-              child: Image.asset(
-                '${ImagePaths.common}/app-store-badge.png',
-                height: _storeBadeHeight,
-              ),
-            ),
-          ),
-        ],
-      );
 }
 
 class NavigationControls extends StatelessWidget {
