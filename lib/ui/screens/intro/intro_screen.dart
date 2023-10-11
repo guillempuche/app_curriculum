@@ -163,13 +163,26 @@ class PageContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: data.imageHeight,
-                  child: Image.asset(
-                    height: data.imageHeight,
-                    '${ImagePaths.common}/${data.image}',
-                    alignment: Alignment.center,
-                  ),
+                Gap($styles.insets.xl),
+                Expanded(
+                  child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+                    // Taking the minimum of the available space and the imageHeight
+                    double imageHeight = min(data.imageHeight, constraints.maxHeight);
+// Ensure that if the difference is negative, remainingHeight will always be set to 0.
+                    double remainingHeight = max(0, constraints.maxHeight - data.imageHeight);
+
+                    return Column(
+                      children: [
+                        SizedBox(height: remainingHeight),
+                        Image.asset(
+                          '${ImagePaths.common}/${data.image}',
+                          // height: data.imageHeight,
+                          height: imageHeight,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ],
+                    );
+                  }),
                 ),
                 Gap($styles.insets.sm),
                 Text(
