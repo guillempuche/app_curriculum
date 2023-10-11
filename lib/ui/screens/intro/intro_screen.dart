@@ -37,7 +37,7 @@ class _IntroScreenState extends State<IntroScreen> {
         mask: '2',
         imageHeight: _maxImageHeightMin - 50,
       ),
-      if (!PlatformInfo.isAndroid && !PlatformInfo.isIOS)
+      if (PlatformInfo.isDesktopOrWeb)
         const PageData(
           title: 'Download The App For The Best Experience',
           image: 'mobile.png',

@@ -3,14 +3,14 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"version.json": "c22323acc7e78f28cd920bf76b99fe0a",
+const RESOURCES = {"version.json": "767fbc3ec6987647561ab9d13ba4765b",
 "splash/img/silhouette-x1.png": "e3242c0ca1f60bbadca0036071b11112",
 "splash/img/silhouette-x2.png": "97ce5bcaba29eb49be88e8a897215943",
 "splash/img/icon-rounded-x2.png": "eb355fd7d316f33e720563dac93f3a4a",
 "splash/img/icon-rounded-x1.png": "2ad6f85fa9541e8558140978f9870e51",
-"index.html": "ff5cbf240d9baf9499b6281ccd9f4296",
-"/": "ff5cbf240d9baf9499b6281ccd9f4296",
-"main.dart.js": "e161995cf093a9a16da0eb61b0454cb0",
+"index.html": "094cc8f8ba74f15ef45601be68f07301",
+"/": "094cc8f8ba74f15ef45601be68f07301",
+"main.dart.js": "bcfff9964187122ebab5821e6f062417",
 "flutter.js": "6fef97aeca90b426343ba6c5c9dc5d4a",
 "favicon.png": "5c6a056701943e3ae9840aabf0beb04d",
 "icons/icon-rounded-x1.png": "2ad6f85fa9541e8558140978f9870e51",

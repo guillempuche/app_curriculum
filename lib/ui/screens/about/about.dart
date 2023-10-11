@@ -20,7 +20,7 @@ class _AboutScreenState extends State<AboutScreen> {
       \r\n### Privacy    
       \r\nRead about the Privacy Policy [here](https://www.guillempuche.com/privacy).
       \r\n### Licenses
-      ${!PlatformInfo.isAndroid && !PlatformInfo.isIOS ? '\r\n- Google Play and the Google Play logo are trademarks of Google LLC.' : ''}
+      ${PlatformInfo.isDesktopOrWeb ? '\r\n- Google Play and the Google Play logo are trademarks of Google LLC.' : ''}
       \r\n- Illustrations by [dekob2](https://icons8.com/illustrations/author/A7iGlOUD5Neq) from [Ouch!](https://icons8.com/illustrations).''';
 
   @override
