@@ -7,11 +7,10 @@
 <a href="https://play.google.com/store/apps/details?id=com.guillempuche.guillem_curriculum">
   <img src="docs/google-play-badge.png" alt="Play Store listing" height="60">
 </a>
-<a href="">
-  <img src="docs/app-store-badge.png" alt="App Store listing" height="60">
-</a>
 
 Website: [https://curriculum.guillempuche.com/](https://curriculum.guillempuche.com/)
+
+_The app is also iOS compatible, but Apple doesn't allow to release it because apps need to provide "some sort of lasting entertainment value or adequate utility". More in [App Store Review Guidelines - Minimum Functionality](https://developer.apple.com/app-store/review/guidelines/#design)._
 
 ## Getting started with the code
 
