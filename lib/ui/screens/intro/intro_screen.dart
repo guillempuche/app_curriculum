@@ -24,7 +24,7 @@ class _IntroScreenState extends State<IntroScreen> {
     final pagesData = [
       const PageData(
         title: 'Hi, I\'m Guillem Puche',
-        desc: 'Purpose-driven service-minded, entrepreneur, first principles, customer-focused',
+        desc: 'Mission-driven & customer-focused mindset, entrepreneur & techie',
         image: 'silhouette.png',
         mask: '1',
         imageHeight: _maxImageHeightMin,
