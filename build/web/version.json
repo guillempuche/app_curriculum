@@ -1,1 +1,6 @@
-{"app_name":"guillem_curriculum","version":"1.0.0","build_number":"12","package_name":"guillem_curriculum"}
+{
+  "app_name": "guillem_curriculum",
+  "version": "1.0.1",
+  "build_number": "13",
+  "package_name": "guillem_curriculum"
+}
