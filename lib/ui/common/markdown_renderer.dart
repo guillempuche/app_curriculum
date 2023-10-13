@@ -68,7 +68,8 @@ class MarkdownRenderer extends StatelessWidget {
       shrinkWrap: true,
       softLineBreak: true,
       onTapLink: (_, url, __) async {
-        if (url?.startsWith('https') == true && await canLaunchUrl(Uri.parse(url!))) {
+        if ((url?.startsWith('https') == true || url?.startsWith('mailto') == true) &&
+            await canLaunchUrl(Uri.parse(url!))) {
           // Open the first kind of link new tab on the browser. Read more in the component's description.
           await launchUrl(
             Uri.parse(url),

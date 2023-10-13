@@ -77,12 +77,13 @@ class _AboutScreenState extends State<AboutScreen> {
                             runSpacing: $styles.insets.sm,
                             runAlignment: WrapAlignment.center,
                             children: [
-                              FilledBtn(
-                                icon: Icons.email,
-                                text: 'Send email',
-                                onPressed: () => _launchUrl(
-                                    'mailto:app_stores.nullify296@simplelogin.com?subject=About%20Guillem%20Curriculum'),
-                              ),
+                              if (!PlatformInfo.isIOS)
+                                FilledBtn(
+                                  icon: Icons.email,
+                                  text: 'Send email',
+                                  onPressed: () => _launchUrl(
+                                      'mailto:app_stores.nullify296@simplelogin.com?subject=About%20Guillem%20Curriculum'),
+                                ),
                               FilledBtn(
                                 icon: Icons.three_p_sharp,
                                 text: 'Message via LinkedIn',
